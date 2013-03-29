@@ -1,0 +1,28 @@
+defutf8 on
+defkanji utf-8
+defencoding utf-8
+encoding utf-8 utf-8
+
+escape ^Tt
+shell -$SHELL
+
+vbell off
+bell_msg "Bell in window %"
+
+autodetach on
+defscrollback 100000
+term xterm-color
+termcap kterm hs@
+terminfo kterm hs@
+
+startup_message off
+caption always "%{=r dd}%-Lw%40L>%?%F%{=b dR}%:[%? %n%f %t %?%F%{-}%:]%?%+Lw %?%F%-015=%0c:%s %d/%m %{-}%:%?"
+
+defbce "on"
+term xterm-256color
+termcapinfo xterm-256color is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
+bind w windowlist -b
+bind ^U encoding utf8 utf8
+bind ^E encoding eucjp utf8
+bind ^W encoding sjis utf8
