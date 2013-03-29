@@ -28,6 +28,13 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
+" disable up/down key
+inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
+inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
+
+" disable preview
+set completeopt=menuone
+
 
 " ==================================================
 " unite.vim
@@ -78,4 +85,13 @@ autocmd VimEnter,Colorscheme python,ruby :hi IndentGuidesEven ctermbg=62
 " ==================================================
 imap <C-L>    <Plug>(neosnippet_expand_or_jump)
 smap <C-L>    <Plug>(neosnippet_expand_or_jump)
-let g:neosnippet#snippets_directory = '~/.neosnippet/'
+"let g:neosnippet#snippets_directory = '~/.neosnippet/'
+let g:neosnippet#snippets_directory = '~/.vim/bundle/snipmate-snippets/snippets'
+
+
+" ==================================================
+" alignta
+" ==================================================
+vnoremap <silent> => :Align @1 =><CR>
+vnoremap <silent> = :Align @1 =<CR>
+vnoremap <silent> == =<CR>

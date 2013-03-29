@@ -20,7 +20,9 @@ NeoBundle "int3/vim-extradite"
 " 入力補助
 NeoBundle "surround.vim"
 NeoBundle "Shougo/neosnippet"
+NeoBundle "honza/snipmate-snippets"
 NeoBundle "mattn/zencoding-vim"
+NeoBundle "h1mesuke/vim-alignta"
 
 " 補完機能
 NeoBundle "Shougo/neocomplcache"
@@ -34,6 +36,7 @@ NeoBundle "thinca/vim-fontzoom"
 NeoBundle "nathanaelkane/vim-indent-guides"
 NeoBundle "desert256.vim"
 
-" その他
+" 開発補助
+NeoBundle "thinca/vim-quickrun"
 NeoBundle "project.tar.gz"
 NeoBundle "vim-scripts/Processing"
