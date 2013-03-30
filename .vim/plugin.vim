@@ -65,6 +65,7 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 hi uniteCandidateInputKeyword guifg=orange
 " エラー回避のためとりあえず
 highlight default link uniteSource__Buffer PreProc
+highlight default link uniteSource__FileMru PreProc
 
 
 " ==================================================

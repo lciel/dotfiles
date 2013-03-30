@@ -169,6 +169,9 @@ cons25)
   zstyle ':completion:*' list-colors \
     'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
   ;;
+*)
+  export TERM=xterm-256color
+  ;;
 esac
 
 # set terminal title including current directory
