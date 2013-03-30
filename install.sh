@@ -10,7 +10,7 @@ do
     ln -s $(pwd)/$file ~/$file
 done
 
-if [ $(uname -a) = Darwin ]; then
+if [ $(uname -s) = Darwin ]; then
     if [ ! -e ~/.screen ]; then
         mkdir -p ~/.screen
     fi
