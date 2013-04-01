@@ -19,7 +19,7 @@ case ${UID} in
   SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
   if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
     #if [ $(uname -s) = Darwin ]; then
-      PROMPT=$'\U26A1'"${PROMPT}"
+      PROMPT=$'\U26A1' "${PROMPT}"
     #fi
   fi
   ;;
@@ -30,7 +30,7 @@ case ${UID} in
   SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
   if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
     #if [ $(uname -s) = Darwin ]; then
-      PROMPT=$'\U26A1'"${PROMPT}"
+      PROMPT=$'\U26A1' "${PROMPT}"
     #fi
   fi
   ;;
@@ -144,6 +144,15 @@ alias df="df -h"
 
 alias su="su -l"
 
+# global alias
+alias -g G="| grep"
+alias -g W="| wc"
+alias -g H="| head"
+alias -g T="| tail"
+alias -g V="| vim"
+
+
+
 ## export configuration
 #
 export CPPFLAGS=-I/opt/X11/include
@@ -154,6 +163,9 @@ export _JAVA_OPTIONS="-Dfile.encoding=UTF-8"
 if [ $(uname -s) = Darwin ]; then
     export SCREENDIR=~/.screen
 fi
+# for grep
+export GREP_COLOR='01;33'
+export GREP_OPTIONS='--color=auto'
 
 
 ## terminal configuration
