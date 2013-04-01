@@ -63,9 +63,15 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 hi uniteCandidateInputKeyword guifg=orange
-" エラー回避のためとりあえず
+" エラー回避のためとりあえず(根本解決したい)
 highlight default link uniteSource__Buffer PreProc
 highlight default link uniteSource__FileMru PreProc
+" ==================================================
+" unite-outline
+" ==================================================
+nnoremap <silent> ,uo :<C-u>Unite -no-quit -vertical -winwidth=30 outline<CR>
+" エラー回避のためとりあえず(根本解決したい)
+highlight default link uniteSource__Outline PreProc
 
 
 " ==================================================

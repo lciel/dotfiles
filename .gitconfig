@@ -1,10 +1,10 @@
 [user]
-    name = louis
-    email = louis@kakao.com
+    name = lciel
+    email = lcently@gmail.com
 [core]
     pager = lv -c
     editor = vim
-    excludesfile = /Users/louis/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [color]
     ui = auto
     status = auto
@@ -36,3 +36,5 @@
     d5 = diff HEAD~~~~~
     gr = grep
     gn = grep -n
+[include]
+    path = ~/.gitconfig.local

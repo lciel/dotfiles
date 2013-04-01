@@ -30,6 +30,7 @@ NeoBundle "rails.vim"
 
 " unite
 NeoBundle "Shougo/unite.vim"
+NeoBundle "h1mesuke/unite-outline"
 
 " 見た目
 NeoBundle "thinca/vim-fontzoom"

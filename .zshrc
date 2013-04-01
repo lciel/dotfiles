@@ -17,16 +17,22 @@ case ${UID} in
   PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
   PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
   SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-  [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-    PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+  if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+    if [ $(uname -s) = Darwin ]; then
+      PROMPT=$'\U26A1'"${PROMPT}"
+    fi
+  fi
   ;;
 *)
   #PROMPT="%{${fg[cyan]}%}%/%%%{${reset_color}%} "
   PROMPT="%{$fg_bold[white]%}[%{$fg_bold[cyan]%}%n@%m%{$fg_bold[white]%}]$%{$reset_color%} "
   PROMPT2="%{${fg[magenta]}%}%_%%%{${reset_color}%} "
   SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-  [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-    PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+  if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+    if [ $(uname -s) = Darwin ]; then
+      PROMPT=$'\U26A1'"${PROMPT}"
+    fi
+  fi
   ;;
 esac
 
