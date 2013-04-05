@@ -102,3 +102,11 @@ let g:neosnippet#snippets_directory = '~/.vim/bundle/snipmate-snippets/snippets'
 vnoremap <silent> => :Align @1 =><CR>
 vnoremap <silent> = :Align @1 =<CR>
 vnoremap <silent> == =<CR>
+
+" ==================================================
+" figutive
+" ==================================================
+" Gdiff
+nnoremap <silent> ,gd :Gdiff<CR>
+" Close gdiff
+nnoremap <silent> ,gD :diffoff!<CR><C-w>l:bd<CR><C-w><C-w><C-w><C-w>

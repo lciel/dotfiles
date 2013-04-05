@@ -57,7 +57,7 @@ set number
 set showmatch
 set showcmd
 set laststatus=2
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%{fugitive#statusline()}\ \ %l,%c%V%8P
+set statusline=%<%f\ %m%r%h%w[%Y]%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%{fugitive#statusline()}\ \ %l,%c%V%8P
 set wrap
 set ambiwidth=double
 syntax on
