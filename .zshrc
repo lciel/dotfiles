@@ -157,7 +157,7 @@ alias -g V="| vim"
 #
 export CPPFLAGS=-I/opt/X11/include
 export JAVA_HOME=/Library/Java/Home
-export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin/:/Applications/android-sdk-macosx/platform-tools
+export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin/:/Applications/android-sdk-macosx/platform-tools:/Applications/android-ndk-r9b/
 export SVN_EDITOR=vim
 export _JAVA_OPTIONS="-Dfile.encoding=UTF-8"
 if [ $(uname -s) = Darwin ]; then

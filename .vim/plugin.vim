@@ -66,6 +66,7 @@ hi uniteCandidateInputKeyword guifg=orange
 " エラー回避のためとりあえず(根本解決したい)
 highlight default link uniteSource__Buffer PreProc
 highlight default link uniteSource__FileMru PreProc
+highlight default link uniteSource__Grep PreProc
 " ==================================================
 " unite-outline
 " ==================================================

@@ -2,6 +2,8 @@
 " +++++ base
 " ==============================
 
+let s:is_mac = (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+
 " ----- GENERAL
 set ignorecase
 set ruler
@@ -29,6 +31,31 @@ match ZenkakuSpace /　/
 set formatoptions+=mM
 set ambiwidth=double
 set display+=lastline
+" ----- ENCODING
+set encoding=utf-8
+set fileencodings=ucs-bom,iso-2022-jp,cp932,euc-jp
+"if has('win32') && has('kaoriya')
+"  set ambiwidth=auto
+"else
+"  set ambiwidth=double
+"endif
+"if has('iconv')
+"  let s:enc_euc = 'euc-jp'
+"  let s:enc_jis = 'iso-2022-jp'
+"  if iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+"    let s:enc_euc = 'euc-jisx0213,euc-jp'
+"    let s:enc_jis = 'iso-2022-jp-3'
+"  endif
+"  set fileencodings&
+"  let &fileencodings = &fileencodings.','.s:enc_jis.',cp932,'.s:enc_euc
+"  unlet s:enc_euc
+"  unlet s:enc_jis
+"endif
+"if has('win32unix')
+"  set   termencoding=cp932
+"elseif !has('macunix')
+"  set   termencoding=euc-jp
+"endif
 
 
 " ----- SEARCH
@@ -97,4 +124,78 @@ hi cursorline term=reverse cterm=none ctermbg=22
 "hi cursorcolumn term=reverse cterm=none ctermbg=237
 "let &t_SI = "\eP\e]50;CursorShape=1\x7\e\\"
 "let &t_EI = "\eP\e]50;CursorShape=0\x7\e\\"
+
+" ----- TODO
+command! Todo edit ~/Dropbox/memo/todo.txt
+nnoremap Mt :Todo <CR>
+
+" ----- MEMO
+function! s:open_memo_file()"
+    let l:memo_dir = $HOME . '/Dropbox/memo/daily/'
+    if !isdirectory(l:memo_dir)
+        call mkdir(l:memo_dir, 'p')
+    endif
+
+    let l:filename = l:memo_dir . strftime('%Y-%m-%d') . '.md'
+
+    execute 'edit ' . l:filename
+    execute 'set fenc=utf-8'
+    execute '999'
+    execute 'write'
+endfunction augroup END"
+
+command! -nargs=0 MemoNow call s:open_memo_file()
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/memo/daily/ -buffer-name=memo_list
+command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/memo/daily/ -no-quit
+command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/memo/daily/
+
+nnoremap Mn :MemoNow <CR>
+nnoremap Ml :MemoList <CR>
+nnoremap Mf :MemoFiler <CR>
+nnoremap Mg :MemoGrep <CR>
+
+" ----- CLIPBOARD
+if s:is_mac
+    vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
+    vmap <D-c> y:call system("pbcopy", getreg("\""))<CR>
+    nmap <Space><C-v> :call setreg("\"",system("pbpaste"))<CR>p
+    nmap <Space><D-v> :call setreg("\"",system("pbpaste"))<CR>p
+endif
+
+
+" ----- FOR OCTOPRESS
+let s:octopress_repositry_dir = "/Users/louis/works/git/octopress/"
+function! s:prepare_octopress_post(title)
+    let current_dir = system("pwd")
+    cd `=s:octopress_repositry_dir`
+    let cmd = "bundle exec rake new_post\\[\"" . a:title . "\"\\]"
+    let ret = system(cmd)
+    let ret = matchstr(ret, '\(Creating new post:\s\)\zs.\+$', 0)
+    return ret
+endfunction
+function! s:get_visual_selection()
+    let [lnum1, col1] = getpos("'<")[1:2]
+    let [lnum2, col2] = getpos("'>")[1:2]
+    let lines = getline(lnum1, lnum2)
+    let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][col1 - 1:]
+    return lines
+endfunction
+function! s:post_to_octopress()
+    let lines = s:get_visual_selection()
+    let title = input("Input title : ")
+    let file_path = s:prepare_octopress_post(title)
+    if file_path == ""
+        echo "Could not create new post."
+        return
+    endif
+    e `=s:octopress_repositry_dir . file_path`
+    for line in lines
+        call append("$", line)
+    endfor
+    set fenc=utf-8
+    w
+endfunction
+command! -nargs=0 OctopressPost call s:post_to_octopress()
+vnoremap ,op :<C-u>OctopressPost<CR>
 

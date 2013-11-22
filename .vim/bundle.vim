@@ -28,6 +28,16 @@ NeoBundle "h1mesuke/vim-alignta"
 NeoBundle "Shougo/neocomplcache"
 NeoBundle "rails.vim"
 
+" vimproc
+NeoBundle "Shougo/vimproc", {
+    \ "build" : {
+        \ "windows" : "make -f make_mingw32.mak",
+        \ "cygwin"  : "make -f make_cygwin.mak",
+        \ "mac"     : "make -f make_mac.mak",
+        \ "unix"    : "make -f make_unix.mak",
+    \ },
+\ }
+
 " unite
 NeoBundle "Shougo/unite.vim"
 NeoBundle "h1mesuke/unite-outline"
