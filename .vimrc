@@ -145,14 +145,14 @@ function! s:open_memo_file()"
 endfunction augroup END"
 
 command! -nargs=0 MemoNow call s:open_memo_file()
-command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/memo/daily/ -buffer-name=memo_list
+command! -nargs=0 MemoList :Unite file:~/Dropbox/memo/daily/ -buffer-name=memo_list
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/memo/daily/ -no-quit
 command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/memo/daily/
 
-nnoremap Mn :MemoNow <CR>
-nnoremap Ml :MemoList <CR>
-nnoremap Mf :MemoFiler <CR>
-nnoremap Mg :MemoGrep <CR>
+nnoremap ,mn :MemoNow <CR>
+nnoremap ,ml :MemoList <CR>
+nnoremap ,mf :MemoFiler <CR>
+nnoremap ,mg :MemoGrep <CR>
 
 " ----- CLIPBOARD
 if s:is_mac

@@ -40,6 +40,7 @@ NeoBundle "Shougo/vimproc", {
 
 " unite
 NeoBundle "Shougo/unite.vim"
+NeoBundle "Shougo/vimfiler"
 NeoBundle "h1mesuke/unite-outline"
 
 " 見た目
