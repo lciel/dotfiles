@@ -3,6 +3,7 @@
 " ==============================
 
 let s:is_mac = (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+let mapleader = ","
 
 " ----- GENERAL
 set ignorecase
@@ -17,9 +18,6 @@ colorscheme torte
 " ----- INCLUDES
 if filereadable(expand('~/.vim/bundle.vim'))
     source ~/.vim/bundle.vim
-endif
-if filereadable(expand('~/.vim/plugin.vim'))
-    source ~/.vim/plugin.vim
 endif
 if filereadable(expand('~/.vim/.vimrc.local'))
     source ~/.vim/.vimrc.local
@@ -69,8 +67,10 @@ set incsearch
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set shiftround
 set expandtab
 set smarttab
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
 
 
 " ----- INPUT
@@ -82,11 +82,13 @@ set list
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
 set number
 set showmatch
+set matchtime=3
 set showcmd
 set laststatus=2
 set statusline=%<%f\ %m%r%h%w[%Y]%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%{fugitive#statusline()}\ \ %l,%c%V%8P
 set wrap
 set ambiwidth=double
+set matchpairs& matchpairs+=<:>
 syntax on
 
 hi clear CursorLine
@@ -97,19 +99,41 @@ highlight CursorLine ctermbg=black guibg=black
 " ----- FILE
 filetype indent on
 filetype plugin on
-
+au BufNewFile,BufRead *.rb  set nowrap tabstop=2 shiftwidth=2
+set nowritebackup
+set nobackup
+set noswapfile
 
 " ----- KEYMAP
+" 移動(折り返し考慮)
 noremap j gj
 noremap k gk
 vnoremap j gj
 vnoremap k gk
+" 移動(折り返し無視)
 noremap gj j
 noremap gk k
 vnoremap gj j
 vnoremap gk k
-
+" 対応ペアに飛ぶ
+nnoremap <Tab> %
+vnoremap <Tab> %
+" 行末まで選択
+vnoremap v $h
+" Ctrl + hjkl でウィンドウ間を移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" Shift + 矢印でウィンドウサイズを変更
+nnoremap <S-Left>  <C-w><<CR>
+nnoremap <S-Right> <C-w>><CR>
+nnoremap <S-Up>    <C-w>-<CR>
+nnoremap <S-Down>  <C-w>+<CR>
+" ハイライトを消す
 nmap <silent> gh :nohlsearch<CR>
+" sudo で保存
+cmap w!! w !sudo tee > /dev/null %
 
 
 " ----- BUFFER
@@ -149,10 +173,12 @@ command! -nargs=0 MemoList :Unite file:~/Dropbox/memo/daily/ -buffer-name=memo_l
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/memo/daily/ -no-quit
 command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/memo/daily/
 
-nnoremap ,mn :MemoNow <CR>
-nnoremap ,ml :MemoList <CR>
-nnoremap ,mf :MemoFiler <CR>
-nnoremap ,mg :MemoGrep <CR>
+nnoremap [memo] <Nop>
+nmap <Leader>m [memo]
+nnoremap <silent> [memo]n :MemoNow <CR>
+nnoremap <silent> [memo]l :MemoList <CR>
+nnoremap <silent> [memo]f :MemoFiler <CR>
+nnoremap <silent> [memo]g :MemoGrep <CR>
 
 " ----- CLIPBOARD
 if s:is_mac
