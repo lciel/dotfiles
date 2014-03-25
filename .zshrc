@@ -212,3 +212,6 @@ esac
 [ -f ~/.zsh/func.zsh ] && source ~/.zsh/func.zsh
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
