@@ -18,9 +18,9 @@ case ${UID} in
   PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
   SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
   if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
-    #if [ $(uname -s) = Darwin ]; then
+    if [ $(uname -s) = Darwin ]; then
       PROMPT=$'\U26A1' "${PROMPT}"
-    #fi
+    fi
   fi
   ;;
 *)
@@ -29,9 +29,10 @@ case ${UID} in
   PROMPT2="%{${fg[magenta]}%}%_%%%{${reset_color}%} "
   SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
   if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
-    #if [ $(uname -s) = Darwin ]; then
-      PROMPT=$'\U26A1' "${PROMPT}"
-    #fi
+    if [ $(uname -s) = Darwin ]; then
+      #PROMPT=$'\U26A1' "${PROMPT}"
+      PROMPT="\xE2\x9A\xA1 ${PROMPT}"
+    fi
   fi
   ;;
 esac

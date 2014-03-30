@@ -145,7 +145,9 @@ NeoBundle "tpope/vim-repeat"
 " ---------------------------
 NeoBundle 'Lokaltog/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 "Disable default mappings
-nmap s <Plug>(easymotion-s2)
+let g:EasyMotion_use_migemo = 1
+nmap <Leader>s <Plug>(easymotion-s2)
+vmap <Leader>s <Plug>(easymotion-s2)
 
 
 " ==============================================================
@@ -314,6 +316,10 @@ let g:quickrun_config = {
 \       "command" : "rspec",
 \       "cmdopt" : "bundle exec",
 \       "exec" : "%o %c %s"
+\   },
+\   "processing" : {
+\       "command" : "processing-java",
+\       "exec" : "%c --sketch=%s:p:h/ --output=/tmp/processing --run --force",
 \   }
 \}
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
@@ -331,4 +337,10 @@ NeoBundleLazy "project.tar.gz", {
 " ---------------------------
 " processing
 " ---------------------------
-NeoBundle "vim-scripts/Processing"
+NeoBundle "sophacles/vim-processing"
+
+" ---------------------------
+" auto-ctags
+" ---------------------------
+NeoBundle "soramugi/auto-ctags.vim"
+let g:auto_ctags = 1
