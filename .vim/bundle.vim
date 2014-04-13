@@ -233,6 +233,8 @@ nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+" プロジェクトルートから
+nnoremap <silent> [unite]e :<C-u>Unite file_rec/async:!<CR>
 " 常用セット
 nnoremap <silent> [unite]u :<C-u>Unite buffer file_mru<CR>
 " 全部乗せ
@@ -293,6 +295,11 @@ autocmd VimEnter,Colorscheme python,ruby :hi IndentGuidesOdd ctermbg=62
 autocmd VimEnter,Colorscheme python,ruby :hi IndentGuidesEven ctermbg=62
 
 " ---------------------------
+" vim-over
+" ---------------------------
+NeoBundle "osyo-manga/vim-over"
+
+" ---------------------------
 " desert256
 " ---------------------------
 NeoBundle "desert256.vim"
@@ -343,4 +350,17 @@ NeoBundle "sophacles/vim-processing"
 " auto-ctags
 " ---------------------------
 NeoBundle "soramugi/auto-ctags.vim"
+let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags = 1
+
+" ---------------------------
+" tagbar
+" ---------------------------
+NeoBundleLazy "majutsushi/tagbar", {
+    \ "autoload": { "commands": ["TagbarToggle"] }}
+nmap <Leader>l :TagbarToggle<CR>
+
+" ---------------------------
+" syntastic
+" ---------------------------
+NeoBundle "scrooloose/syntastic"
