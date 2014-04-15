@@ -20,8 +20,8 @@ if [ $(uname -s) = Darwin ]; then
     fi
 
     if [ ! -e /usr/local/Library/Brewfile ]; then
-        echo "create symlink Brewfile"
-        ln -s $(pwd)/mac/Brewfile /usr/local/Library/Brewfile
+        echo "copy Brewfile"
+        ln -s $(pwd)/osx/Brewfile /usr/local/Library/Brewfile
         echo "do exec bellow commands"
         echo ">> brew tap rcmdnk/brewall"
         echo ">> brew install brewall"
