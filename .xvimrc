@@ -1,0 +1,75 @@
+" ==============================
+" +++++ base
+" ==============================
+
+" ----- GENERAL
+set ignorecase
+set ruler
+set showmode
+set autoindent
+set smartindent
+set shellslash
+" set autochdir
+
+
+" ----- SEARCH
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+
+
+" ----- TAB
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
+set expandtab
+set smarttab
+
+" ----- INPUT
+set backspace=indent,eol,start
+
+
+" ----- VIEW
+set list
+set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+set number
+set showmatch
+set matchtime=3
+set showcmd
+set laststatus=2
+set wrap
+set ambiwidth=double
+set matchpairs& matchpairs+=<:>
+syntax on
+
+hi clear CursorLine
+hi CursorLine gui=underline
+highlight CursorLine ctermbg=black guibg=black
+
+" ----- KEYMAP
+" 対応ペアに飛ぶ
+nnoremap <Tab> %
+vnoremap <Tab> %
+" 行末まで選択
+vnoremap v $h
+" ハイライトを消す
+nmap <silent> gh :nohlsearch<CR>
+
+" XVim original commands
+nnoremap ,h :xhelp <CR>
+nnoremap ,r :run <CR>
+nnoremap ,b :make <CR>
+" タブの切り替え
+nnoremap <C-h> :xccmd selectPreviousTab<CR>
+nnoremap <C-l> :xccmd selectNextTab<CR>
+" .h .m の切り替え
+nnoremap <C-k> :xccmd jumpToNextCounterpart<CR>
+nnoremap <C-j> :xccmd jumpToPreviousCounterpart<CR>
+
+
+" ----- BUFFER
+set hidden
+
+

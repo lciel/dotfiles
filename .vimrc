@@ -156,13 +156,13 @@ command! Todo edit ~/Dropbox/memo/todo.txt
 nnoremap Mt :Todo <CR>
 
 " ----- MEMO
+let s:memo_dir = $HOME . '/Dropbox/memo/daily/'
 function! s:open_memo_file()"
-    let l:memo_dir = $HOME . '/Dropbox/memo/daily/'
-    if !isdirectory(l:memo_dir)
-        call mkdir(l:memo_dir, 'p')
+    if !isdirectory(s:memo_dir)
+        call mkdir(s:memo_dir, 'p')
     endif
 
-    let l:filename = l:memo_dir . strftime('%Y-%m-%d') . '.md'
+    let l:filename = s:memo_dir . strftime('%Y-%m-%d') . '.md'
 
     execute 'edit ' . l:filename
     execute 'set fenc=utf-8'
@@ -186,10 +186,28 @@ nnoremap <silent> [memo]g :MemoGrep <CR>
 if s:is_mac
     vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
     vmap <D-c> y:call system("pbcopy", getreg("\""))<CR>
-    nmap <Space><C-v> :call setreg("\"",system("pbpaste"))<CR>p
-    nmap <Space><D-v> :call setreg("\"",system("pbpaste"))<CR>p
+    nmap <Leader><C-v> :call setreg("\"",system("pbpaste"))<CR>p
+    nmap <Leader><D-v> :call setreg("\"",system("pbpaste"))<CR>p
 endif
 
+" ----- Kobito
+if s:is_mac
+    function! s:open_kobito(...)
+        if a:0 == 0
+            call system('open -a Kobito '.expand('%:p'))
+        else
+            call system('open -a Kobito '.join(a:000, ' '))
+        endif
+    endfunction
+
+    command! -nargs=* Kobito call s:open_kobito(<f-args>)
+    command! -nargs=0 KobitoClose call system("osascript -e 'tell application \"Kobito\" to quit'")
+    command! -nargs=0 KobitoFocus call system("osascript -e 'tell application \"Kobito\" to activate'")
+    nmap <Leader>k [kobito]
+    nnoremap <silent> [kobito]o :Kobito <CR>
+    nnoremap <silent> [kobito]c :KobitoClose <CR>
+    nnoremap <silent> [kobito]f :KobitoFocus <CR>
+endif
 
 " ----- FOR OCTOPRESS
 let s:octopress_repositry_dir = "/Users/louis/works/git/octopress/"
