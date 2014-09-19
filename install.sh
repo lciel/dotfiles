@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES=(.zsh .zshrc .zshenv .vim .vimrc .gitconfig .gitignore_global .screenrc .xvimrc .ctags)
+FILES=(.zsh .zshrc .zshenv .vim .vimrc .gitconfig .gitignore_global .screenrc .xvimrc .ctags .editrc)
 
 git submodule init
 git submodule update

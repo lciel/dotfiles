@@ -3,8 +3,8 @@ tap 'homebrew/dupes'
 brew 'apple-gcc42'
 brew 'screen'
 
-tap 'rcmdnk/brewall'
-brew 'brewall'
+tap 'rcmdnk/file'
+brew 'brew-file'
 
 
 # Cask packages

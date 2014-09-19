@@ -22,6 +22,11 @@ NeoBundle "Shougo/vimproc", {
     \ },
 \ }
 
+" ---------------------------
+" vital.vim
+" ---------------------------
+NeoBundle "vim-jp/vital.vim"
+
 
 " ==============================================================
 " ドキュメント
@@ -90,6 +95,8 @@ NeoBundleLazy "Shougo/neosnippet", {
 imap <C-L>    <Plug>(neosnippet_expand_or_jump)
 smap <C-L>    <Plug>(neosnippet_expand_or_jump)
 let g:neosnippet#snippets_directory = '~/.vim/bundle/snipmate-snippets/snippets'
+
+NeoBundle 'Shougo/neosnippet-snippets'
 
 " ---------------------------
 " emmet-vim : zencoding の後継
@@ -251,10 +258,6 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 hi uniteCandidateInputKeyword guifg=orange
-" エラー回避のためとりあえず(根本解決したい)
-highlight default link uniteSource__Buffer PreProc
-highlight default link uniteSource__FileMru PreProc
-highlight default link uniteSource__Grep PreProc
 
 " ---------------------------
 " vimfiler
@@ -264,14 +267,16 @@ NeoBundle "Shougo/vimfiler"
 " ---------------------------
 " unite-outline
 " ---------------------------
-NeoBundleLazy "h1mesuke/unite-outline", {
+" メンテされなくなったため、 fork 版を使う
+" NeoBundleLazy "h1mesuke/unite-outline", {
+"     \ "autoload": {
+"     \   "unite_sources": ["outline"],
+"     \ }}
+NeoBundleLazy "Shougo/unite-outline", {
     \ "autoload": {
     \   "unite_sources": ["outline"],
     \ }}
 nnoremap <silent> [unite]o :<C-u>Unite -no-quit -vertical -winwidth=30 outline<CR>
-" エラー回避のためとりあえず(根本解決したい)
-highlight default link uniteSource__Outline PreProc
-
 
 " ==============================================================
 " 見た目

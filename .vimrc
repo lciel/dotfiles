@@ -2,6 +2,7 @@
 " +++++ base
 " ==============================
 
+let s:is_windows = has('win95') || has('win16') || has('win32') || has('win64')
 let s:is_mac = (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 let mapleader = ","
 
