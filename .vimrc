@@ -95,6 +95,8 @@ syntax on
 hi clear CursorLine
 hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
+highlight Folded term=standout ctermfg=14 ctermbg=0 guifg=Cyan guibg=Black
+
 
 
 " ----- FILE

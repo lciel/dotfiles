@@ -217,6 +217,11 @@ endif
 " ---------------------------
 NeoBundle "tpope/vim-rails"
 
+" ---------------------------
+" dockerfile.vim
+" ---------------------------
+NeoBundle "honza/dockerfile.vim"
+
 
 " ==============================================================
 " Unite
@@ -278,6 +283,11 @@ NeoBundleLazy "Shougo/unite-outline", {
     \ }}
 nnoremap <silent> [unite]o :<C-u>Unite -no-quit -vertical -winwidth=30 outline<CR>
 
+" ---------------------------
+" neomru
+" ---------------------------
+NeoBundle 'Shougo/neomru.vim'
+
 " ==============================================================
 " 見た目
 
@@ -308,6 +318,11 @@ NeoBundle "osyo-manga/vim-over"
 " desert256
 " ---------------------------
 NeoBundle "desert256.vim"
+
+" ---------------------------
+" vim-markdown
+" ---------------------------
+NeoBundle "tpope/vim-markdown"
 
 
 " ==============================================================
