@@ -143,6 +143,15 @@ nnoremap <Leader>gu :GundoToggle<CR>
 " ---------------------------
 NeoBundle "tpope/vim-repeat"
 
+" ---------------------------
+" vim-multiple-cursors
+" ---------------------------
+" NeoBundleLazy "terryma/vim-multiple-cursors", {
+"     \ "autoload": {
+"     \   "commands" : ['MultipleCursorsFind'],
+"     \}}
+" nnoremap <Leader>mc :MultipleCursorsFind 
+
 
 " ==============================================================
 " 移動補助
@@ -237,6 +246,8 @@ nnoremap [unite] <Nop>
 nmap <Leader>u [unite]
 " history/yank を有効化
 let g:unite_source_history_yank_enable = 1
+" インサートモードで開始
+"let g:unite_enable_start_insert = 1
 " バッファ一覧
 nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
 " ファイル一覧
@@ -324,6 +335,76 @@ NeoBundle "desert256.vim"
 " ---------------------------
 NeoBundle "tpope/vim-markdown"
 
+" ---------------------------
+" wombat256
+" ---------------------------
+NeoBundle "wombat256.vim"
+colorscheme wombat256mod
+
+" ---------------------------
+" lightline.vim
+" ---------------------------
+NeoBundle "itchyny/lightline.vim"
+let g:lightline = {
+        \ 'colorscheme': 'wombat',
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'MyModified',
+        \   'readonly': 'MyReadonly',
+        \   'fugitive': 'MyFugitive',
+        \   'filename': 'MyFilename',
+        \   'fileformat': 'MyFileformat',
+        \   'filetype': 'MyFiletype',
+        \   'fileencoding': 'MyFileencoding',
+        \   'mode': 'MyMode'
+        \ }
+        \ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
 
 " ==============================================================
 " 開発補助

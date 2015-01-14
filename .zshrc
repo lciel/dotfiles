@@ -167,6 +167,8 @@ fi
 # for grep
 export GREP_COLOR='01;33'
 export GREP_OPTIONS='--color=auto'
+# for japanese
+export WCWIDTH_CJK_LEGACY=yes
 
 
 ## terminal configuration
@@ -217,3 +219,6 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+
+### Add for aws
+export PATH="${HOME}/aws/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:$PATH"

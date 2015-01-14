@@ -147,12 +147,6 @@ set hidden
 
 " ----- Color
 set cursorline
-"set cursorcolumn
-"hi cursorline term=reverse cterm=none ctermbg=237
-hi cursorline term=reverse cterm=none ctermbg=22
-"hi cursorcolumn term=reverse cterm=none ctermbg=237
-"let &t_SI = "\eP\e]50;CursorShape=1\x7\e\\"
-"let &t_EI = "\eP\e]50;CursorShape=0\x7\e\\"
 
 " ----- TODO
 command! Todo edit ~/Dropbox/memo/todo.txt
@@ -247,4 +241,3 @@ function! s:post_to_octopress()
 endfunction
 command! -nargs=0 OctopressPost call s:post_to_octopress()
 vnoremap ,op :<C-u>OctopressPost<CR>
-
