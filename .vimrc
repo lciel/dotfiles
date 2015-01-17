@@ -187,6 +187,8 @@ if s:is_mac
     nmap <Leader><D-v> :call setreg("\"",system("pbpaste"))<CR>p
 endif
 
+set pastetoggle=<Leader>p
+
 " ----- Kobito
 if s:is_mac
     function! s:open_kobito(...)
