@@ -187,6 +187,29 @@ if s:is_mac
     nmap <Leader><D-v> :call setreg("\"",system("pbpaste"))<CR>p
 endif
 
+" ----- CLIPBOARD(REMOTE)
+if $SSH_CONNECTION != ""
+    let g:y2r_config = {
+                \   'tmp_file': '/tmp/exchange_file',
+                \   'key_file': expand('$HOME') . '/.exchangekey',
+                \   'host': 'localhost',
+                \   'port': 52224,
+                \}
+    function Copy2Remote()
+        call writefile(split(@", '\n'), g:y2r_config.tmp_file, 'b')
+        let s:params = ['cat %s %s | nc -w1 %s %s']
+        for s:item in ['key_file', 'tmp_file', 'host', 'port']
+            let s:params += [shellescape(g:y2r_config[s:item])]
+        endfor
+        let s:ret = system(call(function('printf'), s:params))
+    endfunction
+    vmap <C-c> y:call Copy2Remote()<CR>
+    vmap <D-c> y:call Copy2Remote()<CR>
+endif
+
+" ----- PASTE TOGGLE
+set pastetoggle=<Leader>p
+
 " ----- Kobito
 if s:is_mac
     function! s:open_kobito(...)

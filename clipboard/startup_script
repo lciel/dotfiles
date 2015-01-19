@@ -1,0 +1,24 @@
+#!/bin/sh
+
+. /etc/rc.common
+
+StartService ()
+{
+    /Library/StartupItems/ClipboardTextListener/scripts/clipboard_text_listener.pl -encoding utf8 -key $(cat ~/.exchangekey) >/dev/null &
+}
+
+StopService ()
+{
+    PID=$(ps aux | grep clipboard_text_listener.pl | grep perl | awk '{print $2}')
+    if [ "$PID" != "" ]; then
+        kill $PID
+    fi
+}
+
+RestartService ()
+{
+    StopService
+    StartService
+}
+
+RunService "$1"
