@@ -11,7 +11,7 @@ if uname -a | grep Darwin -q; then
     fi
     sudo ln -s $(PWD)/ClipboardTextListener $SERVICE_DIR/scripts
     sudo cp startup_script $SERVICE_DIR/ClipboardTextListener
-    sudo cp StartupParameters.plist $SERVICE_DIR/ClipboardTextListener
+    sudo cp StartupParameters.plist $SERVICE_DIR/StartupParameters.plist
     sudo chmod 755 $SERVICE_DIR/ClipboardTextListener
     sudo chown -R root:wheel $SERVICE_DIR
 fi
