@@ -28,7 +28,8 @@ esac
 
 # show SSH sign
 if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
-  PROMPT="\xE2\x9A\xA1 ${PROMPT}"
+  EMOJI=$'\U26A1'
+  PROMPT="${EMOJI} ${PROMPT}"
 fi
 RPROMPT="%{${fg[yellow]}%}[%~]%{$reset_color%}"
 
