@@ -27,4 +27,6 @@ if [ $(uname -s) = Darwin ]; then
         echo ">> brew install brewall"
         echo ">> brewall"
     fi
+
+    ln -s $(pwd)/.screenrc.local ~/.screenrc.local
 fi

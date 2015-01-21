@@ -28,3 +28,9 @@ bind w windowlist -b
 bind ^U encoding utf8 utf8
 bind ^E encoding eucjp utf8
 bind ^W encoding sjis utf8
+
+# move window
+bind h prev
+bind l next
+
+source '.screenrc.local'
