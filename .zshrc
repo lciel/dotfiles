@@ -146,6 +146,10 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g V="| vim"
 
+# environment dependent aliases
+if which gls > /dev/null; then
+    alias ls="gls --color=auto"
+fi
 
 
 ## export configuration
@@ -203,6 +207,15 @@ kterm*|xterm*)
   ;;
 esac
 
+if which gdircolors > /dev/null; then
+    eval $(gdircolors ~/.zsh/dircolors-solarized/dircolors.ansi-universal)
+fi
+if which dircolors > /dev/null; then
+    eval $(dircolors ~/.zsh/dircolors-solarized/dircolors.ansi-universal)
+fi
+
+
+
 # #load user .zshrc configuration file
 #
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
@@ -216,3 +229,14 @@ export PATH="/usr/local/bin:$PATH"
 
 ### Add for aws
 export PATH="${HOME}/aws/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:$PATH"
+
+export PATH="${HOME}/google-cloud-sdk/bin:$PATH"
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/louis/google-cloud-sdk/path.zsh.inc'
+
+if [ -e ${HOME}/.aws/config ]; then
+    export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ${HOME}/.aws/config | sed -e 's/.*= *//')
+    export AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ${HOME}/.aws/config | sed -e 's/.*= *//')
+    export AWS_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
+    export AWS_DEFAULT_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
+fi
