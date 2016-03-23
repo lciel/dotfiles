@@ -70,6 +70,13 @@ nnoremap <silent> <Leader>gV :Gitv --all<CR>
 " ---------------------------
 NeoBundle "int3/vim-extradite"
 
+" ---------------------------
+" excitetranslate-vim
+" ---------------------------
+NeoBundle "mattn/excitetranslate-vim"
+nnoremap <silent> <Leader>tr :ExciteTranslate<CR>
+vnoremap <silent> <Leader>tr :'<,'>ExciteTranslate<CR>
+let g:googletranslate_userip = '118.240.133.225'
 
 " ==============================================================
 " 入力補助
@@ -274,6 +281,9 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 hi uniteCandidateInputKeyword guifg=orange
+" grep
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 
 " ---------------------------
 " vimfiler
