@@ -16,13 +16,68 @@ termcap kterm hs@
 terminfo kterm hs@
 
 startup_message off
-caption always "%{=r dd}%-Lw%40L>%?%F%{=b dR}%:[%? %n%f %t %?%F%{-}%:]%?%+Lw %?%F%-015=%0c:%s %d/%m %{-}%:%?"
 
 attrcolor b ".I"
 defbce "on"
 termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-#term xterm-256color
+term xterm-256color
 #termcapinfo xterm-256color is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
+# Caption for each window
+setenv a ""
+setenv a "$a%?%F"     # if the window has the focus
+setenv a "$a%{= WK}" #   set attribute = {dim, black(k) on bright Write(W)}
+setenv a "$a%:"       # else
+setenv a "$a%{= WK}" #   set attribute = {dim, black(k) on bright Black(K)}
+setenv a "$a%?"       # end if
+setenv a "$a%?%P"     # if copy/paste mode
+#setenv a "$a%{=d Bk}" #   set attribute = {dim, black(k) on bright Blue(B)}
+setenv a "$a%?"       # end if
+setenv a "$a%{= bK}"  # set attribute = {black(k) on bright Black(K)}
+setenv a "$a "        # space
+setenv a "$a%n"       # window number
+setenv a "$a "        # space
+setenv a "$a%{= WK}"  # clearColor
+setenv a "$a "        # space
+setenv a "$a%L="      # Mark the position for the next truncation
+setenv a "$a%h"       # window' hardstatus
+setenv a "$a%L>"      # Truncate %L= ~ %L>, 'L' for > gives marks at the truncation point
+setenv a "$a%="       # With the last %-0=, it makes right alignment for following lines
+setenv a "$a%?%P"     # if copy/paste mode
+setenv a "$a%{= KG}" #   set attribute = {dim, bright Black on white(w}
+setenv a "$a  COPY/PASTE  " # draw this sentence
+setenv a "$a%?"       # end if
+setenv a "$a%?%E"     # if command mode
+setenv a "$a   "    #   draw margin
+setenv a "$a%{= Kb}" #   set attribute = {dim, bright Black on white(w}
+setenv a "$a  COMMAND  " # draw this sentence
+setenv a "$a%?"       # end if
+setenv a "$a%-0="     # pad the string to the display's width. "-0" means
+                      # start from the rightest side
+                      # (e.g. 10=: 10% from left, 010, 10 characters from left
+                      # (     -10=: 10% from right)
+                      # With %L>, %= above, screen tries to truncates the part 
+                      # in the left of "%L>"
+caption always "$a"
+unsetenv a
+
+# hardstatus
+setenv a ""
+setenv a "$a%{= Kw}" # set attribute = {black(k) on bright Black(K)}
+setenv a "$a%-w"     # windows' list up to the current window (shown as "%n %t")
+setenv a "$a%40>"    # Mark here as a point to move when truncation
+                     # Try to move this point to the 40% point
+setenv a "$a%{= Wk}" # set attribute = {black(k) on bright Write(W)}
+setenv a "$a%n"      # current window number
+setenv a "$a "       # space
+setenv a "$a%t"      # current window title
+setenv a "$a%{-}"    # remove the set from the current attributes
+setenv a "$a%+w"     # windows' list starting with the window after the current one (shown as "%n %t")
+setenv a "$a%-0="    # pad the string to the display's width.
+                     # About Truncation/Padding(=,<,>)
+                     # http://aperiodic.net/screen/truncation_padding_escapes
+hardstatus alwayslastline "$a"
+unsetenv a
 
 bind w windowlist -b
 bind ^U encoding utf8 utf8
@@ -31,6 +86,13 @@ bind ^W encoding sjis utf8
 
 # move window
 bind h prev
+bind ^h prev
 bind l next
+bind ^l next
+
+hardcopy_append on
+bind H hardcopy -h
 
 source '.screenrc.local'
+
+
