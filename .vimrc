@@ -139,7 +139,8 @@ nnoremap <S-Down>  <C-w>+<CR>
 nmap <silent> gh :nohlsearch<CR>
 " sudo で保存
 cmap w!! w !sudo tee > /dev/null %
-
+" カレントウィンドウのカレントディレクトリを現在開いているファイルのディレクトリに移動する
+nnoremap <Leader>cd lcd %:h<CR>
 
 " ----- BUFFER
 set hidden
