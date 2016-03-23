@@ -218,6 +218,7 @@ fi
 
 # #load user .zshrc configuration file
 #
+[ -f ~/.zshrc.zplug ] && source ~/.zshrc.zplug
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 [ -f ~/.zsh/func.zsh ] && source ~/.zsh/func.zsh
 

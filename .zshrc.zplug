@@ -1,0 +1,6 @@
+source ~/.zplug/zplug
+
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-history-substring-search"
+
+zplug load --verbose
