@@ -16,6 +16,8 @@ Session.vim
 *.aux
 *.elc
 .zshrc.local
+.screenrc.local
 samples
 .vim/bundle/
+.vim/autoload/
 .vim/.netrwhist
