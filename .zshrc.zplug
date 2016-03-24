@@ -2,5 +2,12 @@ source ~/.zplug/zplug
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-completions"
+
+zplug "mollifier/anyframe"
+bindkey '^r' anyframe-widget-execute-history
+bindkey '^x^r' anyframe-widget-execute-history
+bindkey '^x^k' anyframe-widget-kill
 
 zplug load --verbose
+

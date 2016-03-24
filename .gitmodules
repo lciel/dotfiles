@@ -1,18 +1,24 @@
 [submodule ".vim/neobundle.vim"]
 	path = .vim/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim.git
+	ignore = untracked
 [submodule "clipboard/ClipboardTextListener"]
 	path = clipboard/ClipboardTextListener
 	url = https://github.com/yoshikaw/ClipboardTextListener.git
+	ignore = untracked
 [submodule ".zsh/dircolors-solarized"]
 	path = .zsh/dircolors-solarized
 	url = git@github.com:seebi/dircolors-solarized.git
+	ignore = untracked
 [submodule "osx/osx-terminal.app-colors-solarized"]
 	path = osx/osx-terminal.app-colors-solarized
 	url = git@github.com:tomislav/osx-terminal.app-colors-solarized.git
+	ignore = untracked
 [submodule ".zplug"]
 	path = .zplug
 	url = https://github.com/b4b4r07/zplug
+	ignore = untracked
 [submodule ".tmux/tmux-powerline"]
 	path = .tmux/tmux-powerline
 	url = git://github.com/erikw/tmux-powerline.git
+	ignore = untracked

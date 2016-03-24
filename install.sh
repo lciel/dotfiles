@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES=(.zsh .zshrc .zshenv .vim .vimrc .gitconfig .gitignore_global .screenrc .xvimrc .ctags .editrc .iterm2, .exchangekey .zplug .zshrc.zplug .tmux.conf .tmux)
+FILES=(.zsh .zshrc .zshenv .vim .vimrc .gitconfig .gitignore_global .screenrc .xvimrc .ctags .editrc .iterm2, .exchangekey .zplug .zshrc.zplug .tmux.conf .tmux .peco)
 
 git submodule init
 git submodule update
