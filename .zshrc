@@ -241,3 +241,4 @@ if [ -e ${HOME}/.aws/config ]; then
     export AWS_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
     export AWS_DEFAULT_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
 fi
+

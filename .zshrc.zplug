@@ -5,9 +5,11 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 
 zplug "mollifier/anyframe"
-bindkey '^r' anyframe-widget-execute-history
+bindkey '^r' anyframe-widget-put-history
 bindkey '^x^r' anyframe-widget-execute-history
+bindkey '^xk' anyframe-widget-kill
 bindkey '^x^k' anyframe-widget-kill
+zstyle ":anyframe:selector:peco:" command 'peco --layout=bottom-up'
 
 zplug load --verbose
 
