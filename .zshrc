@@ -147,7 +147,7 @@ alias -g T="| tail"
 alias -g V="| vim"
 
 # environment dependent aliases
-if which gls > /dev/null; then
+if which gls > /dev/null 2>&1; then
     alias ls="gls --color=auto"
 fi
 
@@ -207,10 +207,10 @@ kterm*|xterm*)
   ;;
 esac
 
-if which gdircolors > /dev/null; then
+if which gdircolors > /dev/null 2>&1; then
     eval $(gdircolors ~/.zsh/dircolors-solarized/dircolors.ansi-universal)
 fi
-if which dircolors > /dev/null; then
+if which dircolors > /dev/null 2>&1; then
     eval $(dircolors ~/.zsh/dircolors-solarized/dircolors.ansi-universal)
 fi
 
@@ -233,7 +233,7 @@ export PATH="${HOME}/aws/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:$PAT
 
 export PATH="${HOME}/google-cloud-sdk/bin:$PATH"
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/louis/google-cloud-sdk/path.zsh.inc'
+[ -f ~/google-cloud-sdk/path.zsh.inc ] && source '~/google-cloud-sdk/path.zsh.inc'
 
 if [ -e ${HOME}/.aws/config ]; then
     export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ${HOME}/.aws/config | sed -e 's/.*= *//')
