@@ -38,3 +38,5 @@
     gn = grep -n
 [include]
     path = ~/.gitconfig.local
+[commit]
+	template = /Users/louis/.stCommitMsg

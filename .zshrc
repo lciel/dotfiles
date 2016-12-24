@@ -233,7 +233,7 @@ export PATH="${HOME}/aws/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:$PAT
 
 export PATH="${HOME}/google-cloud-sdk/bin:$PATH"
 # The next line updates PATH for the Google Cloud SDK.
-[ -f ~/google-cloud-sdk/path.zsh.inc ] && source '~/google-cloud-sdk/path.zsh.inc'
+[ -f ~/google-cloud-sdk/path.zsh.inc ] && source ~/google-cloud-sdk/path.zsh.inc
 
 if [ -e ${HOME}/.aws/config ]; then
     export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ${HOME}/.aws/config | sed -e 's/.*= *//')
@@ -242,3 +242,11 @@ if [ -e ${HOME}/.aws/config ]; then
     export AWS_DEFAULT_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
 fi
 
+### Nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# rbenv
+eval "$(rbenv init -)"
+
+# direnv
+eval "$(direnv hook zsh)"

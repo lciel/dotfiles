@@ -486,3 +486,8 @@ nmap <Leader>l :TagbarToggle<CR>
 " syntastic
 " ---------------------------
 NeoBundle "scrooloose/syntastic"
+
+" ---------------------------
+" editor-config
+" ---------------------------
+NeoBundle 'editorconfig/editorconfig-vim'

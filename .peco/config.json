@@ -3,5 +3,11 @@
         "Basic": ["on_default", "default"],
         "Selected": ["on_cyan", "black"],
         "Matched": ["red"]
+    },
+    "CustomFilter": {
+        "ForwardMatcher": {
+            "Cmd": "/Users/louis/.peco/filters/forward_matcher",
+            "BufferThreshold": 1000
+        }
     }
 }

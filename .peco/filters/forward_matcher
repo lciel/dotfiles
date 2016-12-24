@@ -1,0 +1,10 @@
+#! /usr/bin/ruby
+
+query = ARGV[0].to_s
+
+loop do
+  str = STDIN.gets
+  break unless str
+  str.chomp!
+  puts str if str.start_with?(query)
+end

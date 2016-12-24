@@ -150,7 +150,7 @@ set hidden
 set cursorline
 
 " ----- TODO
-command! Todo edit ~/Dropbox/memo/todo.txt
+command! Todo edit ~/Dropbox/memo/todo.md
 nnoremap Mt :Todo <CR>
 
 " ----- MEMO
