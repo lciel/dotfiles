@@ -5,6 +5,11 @@ brew 'screen'
 tap 'rcmdnk/file'
 brew 'brew-file'
 
+# Fonts
+# 2016/12/24 現在下記方法でうまくパッチの当たった font ができない
+# tap 'sanemat/font'
+# brew 'ricty', args: ['vim-powerline']
+
 # Cask packages
 cask 'google-chrome'
 cask '1password'

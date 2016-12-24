@@ -23,5 +23,9 @@ if [ $(uname -s) = Darwin ]; then
     brew bundle install
     cd ..
 
+    echo 'Install font if need:'
+    echo '  $ cp -f /usr/local/Cellar/ricty/*/share/fonts/Ricty*.ttf ~/Library/fonts/.'
+    echo '  $ fc-cache -vf'
+
     ln -s $(pwd)/.screenrc.local ~/.screenrc.local
 fi
