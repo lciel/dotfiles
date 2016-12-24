@@ -19,14 +19,9 @@ if [ $(uname -s) = Darwin ]; then
         mkdir -p ~/.screen
     fi
 
-    if [ ! -e /usr/local/Library/Brewfile ]; then
-        echo "copy Brewfile"
-        ln -s $(pwd)/osx/Brewfile /usr/local/Library/Brewfile
-        echo "do exec bellow commands"
-        echo ">> brew tap rcmdnk/brewall"
-        echo ">> brew install brewall"
-        echo ">> brewall"
-    fi
+    cd osx
+    brew bundle install
+    cd ..
 
     ln -s $(pwd)/.screenrc.local ~/.screenrc.local
 fi
