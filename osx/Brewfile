@@ -2,12 +2,17 @@
 tap 'homebrew/dupes'
 brew 'apple-gcc42'
 brew 'screen'
-
 tap 'rcmdnk/file'
 brew 'brew-file'
 
-
 # Cask packages
+cask 'google-chrome'
+cask '1password'
+cask 'amethyst'
+cask 'google-japanese-ime'
+cask 'slack'
+cask 'flux'
+cask 'dropbox'
 
 # Other Homebrew packages
 brew 'autoconf'
@@ -20,6 +25,7 @@ brew 'cmake'
 brew 'cmigemo'
 brew 'convmv'
 brew 'ctags'
+brew 'direnv'
 brew 'eigen'
 brew 'fontconfig'
 brew 'freetype', args: ['universal']
