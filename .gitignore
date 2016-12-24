@@ -21,3 +21,4 @@ samples
 .vim/bundle/
 .vim/autoload/
 .vim/.netrwhist
+.zplug/.cache
