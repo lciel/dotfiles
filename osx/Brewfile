@@ -79,6 +79,7 @@ brew 'python'
 brew 'qt'
 brew 'rbenv'
 brew 'readline'
+brew 'reattach-to-user-namespace', args: ['with-wrap-pbcopy-and-pbpaste']
 brew 'ruby-build'
 brew 'sqlite'
 brew 'tbb'
