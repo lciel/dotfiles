@@ -235,9 +235,9 @@ export PATH="${HOME}/google-cloud-sdk/bin:$PATH"
 # The next line updates PATH for the Google Cloud SDK.
 [ -f ~/google-cloud-sdk/path.zsh.inc ] && source ~/google-cloud-sdk/path.zsh.inc
 
-if [ -e ${HOME}/.aws/config ]; then
-    export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ${HOME}/.aws/config | sed -e 's/.*= *//')
-    export AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ${HOME}/.aws/config | sed -e 's/.*= *//')
+if [ -e ${HOME}/.aws ]; then
+    export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ${HOME}/.aws/credentials | sed -e 's/.*= *//')
+    export AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ${HOME}/.aws/credentials | sed -e 's/.*= *//')
     export AWS_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
     export AWS_DEFAULT_REGION=$(grep region ${HOME}/.aws/config | sed -e 's/.*= *//')
 fi
