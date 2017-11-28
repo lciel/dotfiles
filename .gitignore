@@ -22,3 +22,4 @@ samples
 .vim/autoload/
 .vim/.netrwhist
 .zplug/.cache
+.tmux/plugins/
