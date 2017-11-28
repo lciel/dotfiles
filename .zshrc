@@ -91,13 +91,17 @@ compinit
 #
 #case "${TERM}" in
 #screen*|ansi*)
-    shorthost="${HOST%%.*}"
+    ssh_host=""
+    if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+        EMOJI=$'\U26A1'
+        ssh_host="${EMOJI} ${HOST%%.*}"
+    fi
     preexec() {
-        echo -ne "\ek${shorthost}:$(basename $(pwd))(${1%% *})\e\\"
+        echo -ne "\ek${1%% *}${ssh_host}\e\\"
     }
-    chpwd() {
-        echo -ne "\ek${shorthost}:$(basename $(pwd))\e\\"
-    }
+#    chpwd() {
+#        echo -ne "\ek${shorthost}:$(basename $(pwd))\e\\"
+#    }
 #    ;;
 #esac
 
@@ -156,7 +160,7 @@ fi
 #
 export CPPFLAGS=-I/opt/X11/include
 export JAVA_HOME=/Library/Java/Home
-export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin/:/Applications/android-sdk-macosx/platform-tools:/Applications/android-ndk-r9b/
+export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin/:/Applications/android-sdk-macosx/platform-tools:/Applications/android-ndk-r9b/:~/Library/Android/sdk/platform-tools/
 export SVN_EDITOR=vim
 export _JAVA_OPTIONS="-Dfile.encoding=UTF-8"
 if [ $(uname -s) = Darwin ]; then
@@ -249,4 +253,5 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 eval "$(rbenv init -)"
 
 # direnv
+export EDITOR=vim
 eval "$(direnv hook zsh)"
