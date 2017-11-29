@@ -6,6 +6,10 @@
 #
 export LANG=ja_JP.UTF-8
 
+## Emoji
+export SSH_EMOJI=$'\U26A1'
+export CLOCK_EMOJI=$'\U1F552'
+
 ## Default shell configuration
 #
 # set prompt
@@ -19,19 +23,24 @@ case ${UID} in
   SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
   ;;
 *)
-  #PROMPT="%{${fg[cyan]}%}%/%%%{${reset_color}%} "
-  PROMPT="%{$fg_bold[white]%}[%{$fg_bold[cyan]%}%n@%m%{$fg_bold[white]%}]$%{$reset_color%} "
-  PROMPT2="%{${fg[magenta]}%}%_%%%{${reset_color}%} "
-  SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+  SSH_SIGN=""
+  if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then SSH_SIGN="${SSH_EMOJI} "; fi
+  PROMPT="
+%F{248}[%D{%m/%d %H:%M:%S}]%f ${SSH_SIGN}%F{073}%n@%m%f%F{180}:%~%f
+$ "
+  PROMPT2="%F{098}%_%%%f "
+  SPROMPT="%F{198}%r is correct? [n,y,a,e]:%f "
   ;;
 esac
 
+re-prompt() {
+    zle .reset-prompt
+    zle .accept-line
+}
+
+zle -N accept-line re-prompt
+
 # show SSH sign
-if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
-  EMOJI=$'\U26A1'
-  PROMPT="${EMOJI} ${PROMPT}"
-fi
-RPROMPT="%{${fg[yellow]}%}[%~]%{$reset_color%}"
 
 # auto change directory
 #
@@ -87,23 +96,38 @@ setopt share_history # share command history data
 autoload -U compinit
 compinit
 
-## Terminal configuration
-#
-#case "${TERM}" in
-#screen*|ansi*)
-    ssh_host=""
-    if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
-        EMOJI=$'\U26A1'
-        ssh_host="${EMOJI} ${HOST%%.*}"
-    fi
-    preexec() {
-        echo -ne "\ek${1%% *}${ssh_host}\e\\"
-    }
-#    chpwd() {
-#        echo -ne "\ek${shorthost}:$(basename $(pwd))\e\\"
-#    }
-#    ;;
-#esac
+
+## Window configs
+
+set_window() {
+    echo -ne "\ek$1\e\\"
+}
+
+set_default_window() {
+    local cmd=$1
+    local ssh_host=""
+    if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then ssh_host="${SSH_EMOJI} ${HOST%%.*}:"; fi
+    set_window "${cmd} ${ssh_host}$(if [ $(pwd) = ~ ]; then echo "~/"; else echo "$(basename $(pwd))"; fi)"
+}
+
+preexec() {
+    set_default_window ${1%% *}
+}
+chpwd() {
+    set_default_window "cd"
+}
+set_default_window "login"
+
+ssh() {
+  if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+    local window_name=$(tmux display -p '#{window_name}')
+    tmux rename-window "ssh ${SSH_EMOJI} ${@: -1}"
+    command ssh "$@"
+    tmux rename-window $window_name
+  else
+    command ssh "$@"
+  fi
+}
 
 
 ## z
@@ -255,3 +279,4 @@ eval "$(rbenv init -)"
 # direnv
 export EDITOR=vim
 eval "$(direnv hook zsh)"
+
