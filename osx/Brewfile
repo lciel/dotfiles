@@ -5,6 +5,7 @@ brew 'screen'
 tap 'rcmdnk/file'
 brew 'brew-file'
 tap 'hage/homebrew-formula'
+brew 'mas'
 
 # Fonts
 # 2016/12/24 現在下記方法でうまくパッチの当たった font ができない

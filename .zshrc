@@ -276,7 +276,15 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 # rbenv
 eval "$(rbenv init -)"
 
+# pyenv
+eval "$(pyenv init -)"
+
 # direnv
 export EDITOR=vim
 eval "$(direnv hook zsh)"
 
+# nodenv
+eval "$(nodenv init -)"
+
+# GPG
+export GPG_TTY=$(tty)
