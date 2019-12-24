@@ -1,0 +1,69 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+  " Gdiff
+  nnoremap <silent> <Leader>gd :Gdiff<CR>
+  " Close gdiff
+  nnoremap <silent> <Leader>gD :diffoff!<CR><C-w>l:bd<CR><C-w><C-w><C-w><C-w>
+'''
+
+[[plugins]] # Unite file_mru
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = 'neomru.vim'
+hook_add = 'source ~/.config/nvim/plugins/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'gregsexton/gitv'
+depends = 'vim-fugitive'
+
+[[plugins]]
+repo = 'int3/vim-extradite'
+depends = 'vim-fugitive'
+
+[[plugins]] # TOML Syntax
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]] # おしゃれな見た目へ変更
+repo = 'itchyny/lightline.vim'
+hook_add = 'source ~/.config/nvim/plugins/lightline.vim'
+
+[[plugins]]
+repo = 'vim-scripts/wombat256.vim'
+hook_post_source = 'colorscheme wombat256mod'
+
+[[plugins]]
+repo = 'tpope/vim-markdown'
+
+[[plugins]] # 置換のプレビュー
+repo = 'osyo-manga/vim-over'
+hook_add = 'nnoremap <silent> <Leader>o :OverCommandLine<CR>'
+
+[[plugins]]
+repo = 'vim-scripts/surround.vim'
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+depends = 'unite.vim'
+hook_add = '''
+nnoremap <silent> [unite]o :<C-u>Unite -no-quit -vertical -winwidth=30 outline<CR>
+'''
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
