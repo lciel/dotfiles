@@ -1,7 +1,7 @@
 [user]
 	name = louis
-	email = louis@jubilee.works
-	signingkey = 734E23AD
+	email = louis@timetreeapp.com
+	signingkey = 0D76F77A7076F9C40B3403A90E58B0BF295B5732
 [core]
     pager = lv -c
     editor = vim
@@ -17,7 +17,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [alias]
     tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
