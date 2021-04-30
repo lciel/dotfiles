@@ -1,4 +1,4 @@
-source ~/.zplug/zplug
+source ~/.zplug/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
@@ -11,5 +11,5 @@ bindkey '^xk' anyframe-widget-kill
 bindkey '^x^k' anyframe-widget-kill
 zstyle ":anyframe:selector:peco:" command 'peco --layout=bottom-up'
 
-zplug load --verbose
+zplug load
 

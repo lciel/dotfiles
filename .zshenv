@@ -8,7 +8,7 @@ fi
 eval "$(/usr/local/bin/rbenv init -)"
 
 # pyenv
-if [ -d ${HOME}/.pyenv  ] ; then
-    export PATH=${HOME}/.pyenv/bin:${PATH}
-fi
-eval "$(pyenv init -)"
+#if [ -d ${HOME}/.pyenv  ] ; then
+#    export PATH=${HOME}/.pyenv/bin:${PATH}
+#fi
+#eval "$(pyenv init -)"
