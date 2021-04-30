@@ -20,7 +20,7 @@ if [ $(uname -s) = Darwin ]; then
     fi
 
     cd osx
-    brew bundle install
+    # brew bundle install
     cd ..
 
     echo 'Install font if need:'
