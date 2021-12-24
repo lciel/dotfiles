@@ -67,3 +67,4 @@ nnoremap <silent> [unite]o :<C-u>Unite -no-quit -vertical -winwidth=30 outline<C
 
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
+
