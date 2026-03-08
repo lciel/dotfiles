@@ -1,40 +1,41 @@
--- 基本設定の読み込み
-require("options")
-
--- キーマッピングの読み込み
-require("core.keymaps")
-
--- メモ機能の読み込み
-require("core.memo")
-
 -- 日本語関連の設定
 vim.cmd([[
   highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=white
   match ZenkakuSpace /　/
   set formatoptions+=mM
-  set ambiwidth=double
   set display+=lastline
 ]])
 
--- ファイルタイプの設定
+-- カーソル行のハイライト
 vim.cmd([[
-  filetype indent on
-  filetype plugin on
-  au BufNewFile,BufRead *.rb set nowrap tabstop=2 shiftwidth=2
-  au BufNewFile,BufRead *.rs set nowrap tabstop=2 shiftwidth=2
+  hi clear CursorLine
+  hi CursorLine gui=underline
+  highlight CursorLine ctermbg=black guibg=black
+  highlight Folded term=standout ctermfg=14 ctermbg=0 guifg=Cyan guibg=Black
 ]])
+
+-- ファイルタイプの設定
+vim.filetype.add({
+  pattern = {
+    ["*.rb"] = function(_, bufnr)
+      vim.bo[bufnr].tabstop = 2
+      vim.bo[bufnr].shiftwidth = 2
+      vim.bo[bufnr].wrap = false
+    end,
+    ["*.rs"] = function(_, bufnr)
+      vim.bo[bufnr].tabstop = 2
+      vim.bo[bufnr].shiftwidth = 2
+      vim.bo[bufnr].wrap = false
+    end,
+  },
+})
 
 -- シンタックスハイライト
 vim.cmd("syntax on")
+vim.cmd("filetype indent on")
+vim.cmd("filetype plugin on")
 
--- VSCode Neovim固有の設定
+-- VSCode Neovim 固有の設定
 if vim.g.vscode then
-  -- VSCode Neovim用の設定
-  vim.cmd([[
-    set hidden
-    set nobackup
-    set nowritebackup
-    set noswapfile
-    set clipboard=unnamedplus
-  ]])
-end 
+  vim.opt.clipboard = "unnamedplus"
+end

@@ -8,6 +8,7 @@ local options = {
 	swapfile = false,
 	undofile = true,
 	clipboard = "unnamedplus",
+	hidden = true,
 
 	-- 表示設定
 	number = true,
@@ -25,6 +26,12 @@ local options = {
 	sidescrolloff = 8,
 	splitbelow = false,
 	splitright = false,
+	list = true,
+	wrap = true,
+	showmatch = true,
+	matchtime = 3,
+	showcmd = true,
+	laststatus = 2,
 
 	-- 検索設定
 	hlsearch = true,
@@ -36,6 +43,7 @@ local options = {
 	expandtab = true,
 	shiftwidth = 2,
 	tabstop = 2,
+	shiftround = true,
 	smartindent = true,
 
 	-- 補完設定
@@ -49,15 +57,21 @@ local options = {
 	background = "dark",
 	mouse = "a",
 	conceallevel = 0,
+	ambiwidth = "double",
 }
 
--- オプションの適用
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
 -- 追加の設定
 vim.opt.shortmess:append("c")
+vim.opt.listchars = { tab = ">-", trail = "-", nbsp = "%", extends = ">", precedes = "<" }
+vim.opt.fileencodings = { "ucs-bom", "utf-8", "iso-2022-jp", "cp932", "euc-jp" }
+vim.opt.matchpairs:append("<:>")
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set formatoptions-=cro]])
+
+-- ライブ置換プレビュー (vim-over の代替)
+vim.opt.inccommand = "split"
