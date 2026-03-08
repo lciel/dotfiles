@@ -1,12 +1,3 @@
--- VSCode Neovim 環境では最小限のプラグインのみ
-if vim.g.vscode then
-  require("lazy").setup({
-    { "tpope/vim-fugitive" },
-    { "kylechui/nvim-surround", event = "VeryLazy", config = true },
-  })
-  return
-end
-
 -- lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -17,6 +8,15 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- VSCode Neovim 環境では最小限のプラグインのみ
+if vim.g.vscode then
+  require("lazy").setup({
+    { "tpope/vim-fugitive" },
+    { "kylechui/nvim-surround", event = "VeryLazy", config = true },
+  })
+  return
+end
 
 require("lazy").setup({
   -- Git
