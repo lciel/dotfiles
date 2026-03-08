@@ -1,31 +1,44 @@
 #!/bin/bash
+# Bootstrap script for dotfiles setup using chezmoi.
+# On a new machine, run:
+#   sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <github-username>/dotfiles
+#
+# Or if chezmoi is already installed:
+#   chezmoi init --apply <github-username>/dotfiles
+#
+# On this development machine (repo already cloned):
+#   chezmoi init --source ~/path/to/this/repo
+#   chezmoi apply
 
-FILES=(.zsh .zshrc .zshenv .vim .vimrc .gitconfig .gitignore_global .screenrc .xvimrc .ctags .editrc .iterm2 .exchangekey .zplug .zshrc.zplug .tmux.conf .tmux .peco nvim)
+set -e
 
-git submodule init
-git submodule update
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-for file in ${FILES[@]}
-do
-    if [ ! -e ~/$file ]; then
-        echo "create symlink ~/${file}"
-        ln -s $(pwd)/$file ~/$file
-    fi
-done
+# Install chezmoi if not present
+if ! command -v chezmoi &>/dev/null; then
+  if command -v brew &>/dev/null; then
+    brew install chezmoi
+  else
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+    export PATH="$HOME/.local/bin:$PATH"
+  fi
+fi
 
-if [ $(uname -s) = Darwin ]; then
-    if [ ! -e ~/.screen ]; then
-        echo "create dir ~/.screen"
-        mkdir -p ~/.screen
-    fi
+# Initialize submodules
+git -C "$DOTFILES_DIR" submodule sync
+git -C "$DOTFILES_DIR" submodule update --init
 
-    cd osx
-    # brew bundle install
-    cd ..
+# Use existing repo as chezmoi source
+chezmoi init --source "$DOTFILES_DIR"
+chezmoi apply
 
-    echo 'Install font if need:'
-    echo '  $ cp -f /usr/local/Cellar/ricty/*/share/fonts/Ricty*.ttf ~/Library/fonts/.'
-    echo '  $ fc-cache -vf'
+echo "Done. Edit ~/.config/chezmoi/chezmoi.toml to add sourceDir if needed."
 
-    ln -s $(pwd)/.screenrc.local ~/.screenrc.local
+if [ "$(uname -s)" = "Darwin" ]; then
+  if [ ! -e ~/.screen ]; then
+    mkdir -p ~/.screen
+  fi
+  echo ""
+  echo "macOS: Install Homebrew packages with:"
+  echo "  brew bundle install --file=$DOTFILES_DIR/osx/Brewfile"
 fi

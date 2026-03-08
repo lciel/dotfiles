@@ -1,0 +1,96 @@
+## Prefix
+unbind C-b
+set-option -g prefix C-t
+
+
+## Window
+bind-key C-t last-window
+bind-key C-l next-window
+bind-key C-h previous-window
+bind-key C-c new-window
+
+
+## Pane
+bind-key | split-window -h
+bind-key - split-window -v
+bind-key h select-pane -L
+bind-key l select-pane -R
+bind-key j select-pane -D
+bind-key k select-pane -U
+bind -r H resize-pane -L
+bind -r J resize-pane -D
+bind -r K resize-pane -U
+bind -r L resize-pane -R
+
+
+## Sync-pane
+bind-key e setw synchronize-panes on
+bind-key E setw synchronize-panes off
+
+
+## Window Options
+set-window-option -g mode-keys vi
+
+
+## History
+set-option -g history-limit 100000
+
+
+## Copy Mode
+bind-key p paste-buffer
+bind-key -T copy-mode-vi Escape send-keys -X clear-selection
+bind-key -T copy-mode-vi v      send-keys -X begin-selection
+bind-key -T copy-mode-vi V      send-keys -X select-line
+bind-key -T copy-mode-vi C-v    send-keys -X rectangle-toggle
+bind-key -T copy-mode-vi y      send-keys -X copy-selection
+bind-key -T copy-mode-vi Y      send-keys -X copy-line
+{{ if eq .chezmoi.os "darwin" -}}
+bind-key -T copy-mode-vi C-c    send-keys -X copy-pipe "reattach-to-user-namespace pbcopy"
+{{- else -}}
+bind-key -T copy-mode-vi C-c    send-keys -X copy-pipe "xclip -selection clipboard"
+{{- end }}
+bind-key -T copy-mode-vi C-b    send-keys -X page-up
+bind-key -T copy-mode-vi C-f    send-keys -X page-down
+bind-key -T copy-mode-vi g      send-keys -X top-line
+bind-key -T copy-mode-vi G      send-keys -X bottom-line
+set -s escape-time 0
+
+
+## Visual
+set-option -g default-terminal screen-256color
+set-option -g status on
+set-option -g status-interval 2
+# set-option -g status-utf8 on
+# カラー
+set -g status-style fg=colour231,bg=colour239
+# 左部分
+set -g status-left-length 20
+set -qg status-left '#{?client_prefix,#[fg=colour254]#[bg=colour31]#[nobold],#[fg=colour0]#[bg=colour254]#[nobold]} #S #{?client_prefix,#[fg=colour31]#[bg=colour239]#[nobold],#[fg=colour254]#[bg=colour239]#[nobold]}'
+# 右部分
+set -g status-right-length 150
+set -g status-right "%Y/%m/%d %H:%M #{battery_status_bg}#[fg=colour0] Batt: #{battery_icon} #{battery_percentage} #{battery_remain} "
+# ウィンドウ
+set -g window-status-format "#[fg=colour244,bg=colour239] #I#[fg=colour240]#[default] #W"
+set -g window-status-current-format "#[fg=colour239,bg=colour12]#[fg=colour0,bg=colour12]#I#[fg=colour0,nobold] #W#[fg=colour12,bg=colour239,nobold]"
+setw -g window-status-style fg=colour249
+set -qg window-status-last-fg colour254
+setw -g window-status-activity-style none,fg=yellow
+setw -g window-status-bell-style none,fg=red
+# open command
+#set -g default-command "reattach-to-user-namespace -l ${SHELL}"
+
+
+## Config
+bind-key R source-file ~/.tmux.conf \; display-message "Config reloaded."
+
+
+## Plugins > Install: Prefix-I
+set -g @tpm_plugins '              \
+  tmux-plugins/tpm                 \
+  tmux-plugins/tmux-open           \
+  tmux-plugins/tmux-resurrect      \
+  tmux-plugins/tmux-battery        \
+'
+
+run-shell '~/.tmux/plugins/tpm/tpm'
+

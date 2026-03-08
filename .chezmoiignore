@@ -1,0 +1,8 @@
+# chezmoi itself
+.config/chezmoi
+
+# macOS
+.DS_Store
+
+# Claude Code — not managed by chezmoi
+.claude

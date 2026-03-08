@@ -18,8 +18,14 @@ Session.vim
 .zshrc.local
 .screenrc.local
 samples
-.vim/bundle/
-.vim/autoload/
-.vim/.netrwhist
-.zplug/.cache
-.tmux/plugins/
+dot_vim/bundle/
+dot_vim/autoload/
+dot_vim/.netrwhist
+dot_zplug/.cache
+dot_tmux/plugins/
+!dot_tmux/plugins/tpm
+nvim.bak/
+
+# Claude Code (machine-specific, not shared)
+dot_claude/
+CLAUDE.md
