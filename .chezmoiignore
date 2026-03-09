@@ -4,5 +4,8 @@
 # macOS
 .DS_Store
 
+# Repo files — not dotfiles
+README.md
+
 # Claude Code — not managed by chezmoi
 .claude
