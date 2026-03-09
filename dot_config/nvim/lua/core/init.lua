@@ -30,6 +30,9 @@ vim.filetype.add({
   },
 })
 
+-- メモ機能の読み込み
+require("core.memo")
+
 -- シンタックスハイライト
 vim.cmd("syntax on")
 vim.cmd("filetype indent on")
