@@ -26,6 +26,10 @@ dot_tmux/plugins/
 !dot_tmux/plugins/tpm
 nvim.bak/
 
+node_modules/
+package.json
+package-lock.json
+
 # Claude Code project files for this repo (not shared)
 .claude/
 CLAUDE.md

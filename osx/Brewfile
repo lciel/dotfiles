@@ -1,9 +1,5 @@
-# Tap repositories
-tap "sanemat/font"
-
 # Fonts
 cask "font-ricty-diminished"
-brew "sanemat/font/ricty"
 
 # Core CLI tools
 brew "chezmoi"
@@ -33,7 +29,6 @@ brew "tmux"
 # Security
 brew "gnupg"
 brew "pinentry-mac"
-brew "nmap"
 
 # Cloud & infra
 brew "awscli"
@@ -42,21 +37,7 @@ brew "awscli"
 brew "automake"
 brew "cmake"
 brew "rustup"
-
-# Languages & tools (not managed by mise)
 brew "gawk"
-brew "mecab"
-
-# Media
-brew "ffmpeg"
-brew "fontforge"
-brew "vips"
-
-# Data
-brew "redis"
-
-# Other
-brew "lv"
 
 # Cask packages
 cask "1password"

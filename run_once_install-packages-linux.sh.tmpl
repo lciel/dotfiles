@@ -1,0 +1,95 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -euo pipefail
+
+# =============================================================================
+# Ubuntu/Debian package setup (run once by chezmoi)
+# =============================================================================
+
+if ! command -v apt-get &>/dev/null; then
+  echo "Skipping: apt-get not found (not Debian/Ubuntu)"
+  exit 0
+fi
+
+sudo apt-get update
+
+# Core CLI tools
+sudo apt-get install -y \
+  curl \
+  git \
+  git-lfs \
+  jq \
+  tree \
+  gnupg \
+  gawk
+
+# Build tools
+sudo apt-get install -y \
+  build-essential \
+  automake \
+  cmake
+
+# Terminal multiplexer
+sudo apt-get install -y tmux
+
+# Clipboard support (for tmux)
+sudo apt-get install -y xclip
+
+# --- Tools not in apt: install via their official methods ---
+
+# chezmoi (already installed if running this script, but ensure latest)
+if ! command -v chezmoi &>/dev/null; then
+  sh -c "$(curl -fsLS get.chezmoi.io)"
+fi
+
+# neovim (stable PPA for latest version)
+if ! command -v nvim &>/dev/null; then
+  sudo apt-get install -y software-properties-common
+  sudo add-apt-repository -y ppa:neovim-ppa/stable
+  sudo apt-get update
+  sudo apt-get install -y neovim
+fi
+
+# fzf
+if ! command -v fzf &>/dev/null; then
+  sudo apt-get install -y fzf 2>/dev/null || {
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --key-bindings --completion --no-update-rc
+  }
+fi
+
+# direnv
+if ! command -v direnv &>/dev/null; then
+  sudo apt-get install -y direnv
+fi
+
+# zoxide
+if ! command -v zoxide &>/dev/null; then
+  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+fi
+
+# mise (runtime manager)
+if ! command -v mise &>/dev/null; then
+  curl https://mise.run | sh
+fi
+
+# sheldon (zsh plugin manager)
+if ! command -v sheldon &>/dev/null; then
+  curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
+fi
+
+# rustup
+if ! command -v rustup &>/dev/null; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
+
+# peco
+if ! command -v peco &>/dev/null; then
+  sudo apt-get install -y peco 2>/dev/null || {
+    echo "peco: install manually from https://github.com/peco/peco/releases"
+  }
+fi
+
+echo "Done! You may need to restart your shell."
+{{ end -}}
