@@ -1,4 +1,0 @@
-{
-    Description = "Clipboard Listener for remote server";
-    Provides    = ("clipboard_text_listener.pl");
-}

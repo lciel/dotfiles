@@ -1,97 +1,80 @@
-# Tap repositories and their packages
-tap 'homebrew/dupes'
-brew 'apple-gcc42'
-brew 'screen'
-tap 'rcmdnk/file'
-brew 'brew-file'
-tap 'hage/homebrew-formula'
-brew 'mas'
+# Tap repositories
+tap "sanemat/font"
 
 # Fonts
-# 2016/12/24 現在下記方法でうまくパッチの当たった font ができない
-# tap 'sanemat/font'
-# brew 'ricty', args: ['vim-powerline']
+cask "font-ricty-diminished"
+brew "sanemat/font/ricty"
+
+# Core CLI tools
+brew "chezmoi"
+brew "coreutils"
+brew "curl"
+brew "git"
+brew "git-lfs"
+brew "jq"
+brew "tree"
+
+# Shell
+brew "sheldon"
+brew "zoxide"
+brew "fzf"
+brew "direnv"
+brew "peco"
+
+# Runtime management
+brew "mise"
+
+# Editor
+brew "neovim"
+
+# Terminal multiplexer
+brew "tmux"
+
+# Security
+brew "gnupg"
+brew "pinentry-mac"
+brew "nmap"
+
+# Cloud & infra
+brew "awscli"
+
+# Build tools
+brew "automake"
+brew "cmake"
+brew "rustup"
+
+# Languages & tools (not managed by mise)
+brew "gawk"
+brew "mecab"
+
+# Media
+brew "ffmpeg"
+brew "fontforge"
+brew "vips"
+
+# Data
+brew "redis"
+
+# Other
+brew "lv"
 
 # Cask packages
-cask 'google-chrome'
-cask '1password'
-cask 'amethyst'
-cask 'google-japanese-ime'
-cask 'slack'
-cask 'flux'
-cask 'dropbox'
-
-# Other Homebrew packages
-brew 'autoconf'
-brew 'automake'
-brew 'boost'
-brew 'cabextract'
-brew 'ccache'
-brew 'cloog'
-brew 'cmake'
-brew 'cmigemo'
-brew 'convmv'
-brew 'ctags'
-brew 'direnv'
-brew 'eigen'
-brew 'fontconfig'
-brew 'freetype', args: ['universal']
-brew 'gdbm'
-brew 'geoip'
-brew 'git-flow'
-brew 'gmp'
-brew 'gnu-sed'
-brew 'gnupg'
-brew 'gnutls'
-brew 'gradle'
-brew 'imagemagick'
-brew 'isl'
-brew 'jasper', args: ['universal']
-brew 'jpeg', args: ['universal']
-brew 'libgpg-error'
-brew 'libicns', args: ['universal']
-brew 'libksba'
-brew 'libmpc'
-brew 'libpng', args: ['universal']
-brew 'libtasn1', args: ['universal']
-brew 'libtiff', args: ['universal']
-brew 'libtool'
-brew 'libyaml'
-brew 'little-cms'
-brew 'lua'
-brew 'lv'
-brew 'lynx'
-brew 'mecab'
-brew 'mecab-ipadic'
-brew 'mobile-shell'
-brew 'mosh'
-brew 'mpfr'
-brew 'mysql'
-brew 'nettle'
-brew 'nkf'
-brew 'node'
-brew 'oniguruma'
-brew 'openssl'
-brew 'p11-kit', args: ['universal']
-brew 'peco'
-brew 'pkg-config'
-brew 'protobuf'
-brew 'python'
-brew 'qt'
-brew 'rbenv'
-brew 'readline'
-brew 'reattach-to-user-namespace', args: ['with-wrap-pbcopy-and-pbpaste']
-brew 'ruby-build'
-brew 'sqlite'
-brew 'tbb'
-brew 'thrift'
-brew 'tree'
-# マルチバイトまわりが微妙なので、パッチが当たった tmux 2.1 を入れる
-# brew 'tmux'
-brew 'tmux21'
-brew 'vim', args: ['with-lua']
-brew 'wine'
-brew 'winetricks'
-brew 'xz'
-brew 'yasm'
-brew 'z'
+cask "1password"
+cask "1password-cli"
+cask "amethyst"
+cask "android-studio"
+cask "cursor"
+cask "deepl"
+cask "discord"
+cask "docker"
+cask "dropbox"
+cask "google-chrome"
+cask "google-japanese-ime"
+cask "meetingbar"
+cask "ngrok"
+cask "notion"
+cask "obsidian"
+cask "slack"
+cask "sourcetree"
+cask "visual-studio-code"
+cask "zoom"
