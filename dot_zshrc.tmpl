@@ -60,25 +60,27 @@ setopt share_history
 autoload -U compinit
 compinit
 
-## Window title (tmux integration)
-set_window() {
-    echo -ne "\ek$1\e\\"
-}
+## Window title (tmux integration — only active inside tmux)
+if [ -n "$TMUX" ]; then
+  set_window() {
+      echo -ne "\ek$1\e\\"
+  }
 
-set_default_window() {
-    local cmd=$1
-    local ssh_host=""
-    if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then ssh_host="${SSH_EMOJI} ${HOST%%.*}:"; fi
-    set_window "${cmd} ${ssh_host}$(if [ $(pwd) = ~ ]; then echo "~/"; else echo "$(basename $(pwd))"; fi)"
-}
+  set_default_window() {
+      local cmd=$1
+      local ssh_host=""
+      if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then ssh_host="${SSH_EMOJI} ${HOST%%.*}:"; fi
+      set_window "${cmd} ${ssh_host}$(if [ $(pwd) = ~ ]; then echo "~/"; else echo "$(basename $(pwd))"; fi)"
+  }
 
-preexec() {
-    set_default_window ${1%% *}
-}
-chpwd() {
-    set_default_window "cd"
-}
-set_default_window "login"
+  preexec() {
+      set_default_window ${1%% *}
+  }
+  chpwd() {
+      set_default_window "cd"
+  }
+  set_default_window "login"
+fi
 
 ssh() {
   if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
