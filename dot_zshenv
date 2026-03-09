@@ -1,2 +1,5 @@
+# Local binaries (chezmoi, sheldon, snap, etc.)
+export PATH="$HOME/.local/bin:/snap/bin:$PATH"
+
 # cargo/rust
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
