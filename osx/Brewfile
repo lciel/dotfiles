@@ -15,7 +15,6 @@ brew "sheldon"
 brew "zoxide"
 brew "fzf"
 brew "direnv"
-brew "peco"
 
 # Runtime management
 brew "mise"
