@@ -14,6 +14,8 @@ set -e
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+echo $DOTFILES_DIR
+
 # Install chezmoi if not present
 if ! command -v chezmoi &>/dev/null; then
   if command -v brew &>/dev/null; then
@@ -28,11 +30,17 @@ fi
 git -C "$DOTFILES_DIR" submodule sync
 git -C "$DOTFILES_DIR" submodule update --init
 
-# Use existing repo as chezmoi source
-chezmoi init --source "$DOTFILES_DIR"
+# Link existing repo as chezmoi source
+CHEZMOI_SOURCE="${HOME}/.local/share/chezmoi"
+if [ ! -e "$CHEZMOI_SOURCE" ]; then
+  mkdir -p "$(dirname "$CHEZMOI_SOURCE")"
+  ln -s "$DOTFILES_DIR" "$CHEZMOI_SOURCE"
+fi
+
+chezmoi init
 chezmoi apply
 
-echo "Done. Edit ~/.config/chezmoi/chezmoi.toml to add sourceDir if needed."
+echo "Done."
 
 if [ "$(uname -s)" = "Darwin" ]; then
   if [ ! -e ~/.screen ]; then
