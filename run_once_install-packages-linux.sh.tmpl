@@ -13,6 +13,10 @@ fi
 
 sudo apt-get update
 
+# Locale (ja_JP.UTF-8 used in zshrc)
+sudo apt-get install -y locales
+sudo locale-gen ja_JP.UTF-8
+
 # Core CLI tools
 sudo apt-get install -y \
   curl \
@@ -29,6 +33,12 @@ sudo apt-get install -y \
   automake \
   cmake
 
+# Shell
+sudo apt-get install -y zsh
+if [ "$(basename "$SHELL")" != "zsh" ]; then
+  chsh -s "$(which zsh)"
+fi
+
 # Terminal multiplexer
 sudo apt-get install -y tmux
 
@@ -42,21 +52,18 @@ if ! command -v chezmoi &>/dev/null; then
   sh -c "$(curl -fsLS get.chezmoi.io)"
 fi
 
-# neovim (stable PPA for latest version)
-if ! command -v nvim &>/dev/null; then
-  sudo apt-get install -y software-properties-common
-  sudo add-apt-repository -y ppa:neovim-ppa/stable
-  sudo apt-get update
-  sudo apt-get install -y neovim
+# neovim (snap for latest stable; 0.10+ required by nvim-treesitter)
+if ! command -v snap &>/dev/null; then
+  sudo apt-get install -y snapd
 fi
+sudo snap install nvim --classic
 
-# fzf
-if ! command -v fzf &>/dev/null; then
-  sudo apt-get install -y fzf 2>/dev/null || {
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --key-bindings --completion --no-update-rc
-  }
+# fzf (0.48+ required for --zsh flag; apt version is too old)
+if [ ! -d ~/.fzf ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 fi
+~/.fzf/install --bin
+ln -sf ~/.fzf/bin/fzf ~/.local/bin/fzf
 
 # direnv
 if ! command -v direnv &>/dev/null; then
