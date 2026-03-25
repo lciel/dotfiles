@@ -6,3 +6,25 @@
 
 # Repo files — not dotfiles
 README.md
+
+# VS Code settings — OS-specific paths
+{{ if ne .chezmoi.os "darwin" }}
+Library/
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
+AppData/
+{{ end }}
+
+# Unix-only files — skip on Windows
+{{ if eq .chezmoi.os "windows" }}
+.zshrc
+.zshenv
+.zsh/
+.tmux.conf
+.tmux/
+.vimrc
+.xvimrc
+.editrc
+.screenrc
+.iterm2/
+{{ end }}
