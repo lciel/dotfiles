@@ -4,6 +4,6 @@
   "effortLevel": "medium",
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
+    "command": "python3 ~/.claude/statusline.py"
   }
 }
