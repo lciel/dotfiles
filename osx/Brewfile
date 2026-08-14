@@ -1,3 +1,6 @@
+# Install with: brew bundle install --file=osx/Brewfile
+# All entries live in homebrew/core and homebrew/cask — no extra taps needed.
+
 # Fonts
 cask "font-ricty-diminished"
 
@@ -7,7 +10,9 @@ brew "coreutils"
 brew "curl"
 brew "git"
 brew "git-lfs"
+brew "gh"
 brew "jq"
+brew "lv"      # .gitconfig uses `lv -c` as the git pager
 brew "tree"
 
 # Shell
@@ -38,23 +43,34 @@ brew "cmake"
 brew "rustup"
 brew "gawk"
 
-# Cask packages
+# Media / archives
+brew "ffmpeg"
+brew "sevenzip"
+
+# Terminals
+cask "iterm2"
+cask "cmux"
+
+# Editors & AI clients
+cask "cursor"
+cask "visual-studio-code"
+cask "claude"
+cask "chatgpt"
+
+# Cloud & infra
+cask "docker-desktop"
+cask "gcloud-cli"
+
+# Productivity
 cask "1password"
 cask "1password-cli"
 cask "amethyst"
-cask "android-studio"
-cask "cursor"
-cask "deepl"
-cask "discord"
-cask "docker"
 cask "dropbox"
 cask "google-chrome"
 cask "google-japanese-ime"
-cask "meetingbar"
-cask "ngrok"
 cask "notion"
-cask "obsidian"
+
+# Communication
 cask "slack"
-cask "sourcetree"
-cask "visual-studio-code"
+cask "discord"
 cask "zoom"
