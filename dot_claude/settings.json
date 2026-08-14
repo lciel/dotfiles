@@ -1,9 +1,14 @@
 {
-  "model": "sonnet",
-  "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "medium",
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "python3 ~/.claude/statusline.py"
-  }
+  },
+  "enabledPlugins": {
+    "security-guidance@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "theme": "dark-daltonized"
 }
