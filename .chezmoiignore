@@ -4,8 +4,38 @@
 # macOS
 .DS_Store
 
-# Repo files — not dotfiles
+# Python bytecode (Claude Code skill scripts)
+**/__pycache__
+
+# Repo files — not dotfiles, must never land in $HOME
 README.md
+CLAUDE.md
+install.sh
+fonts/
+osx/
+clipboard/
+nvim.bak/
+node_modules/
+package.json
+package-lock.json
+
+# Secrets — never manage these, they belong only on the machine that needs them.
+# Listed defensively: an accidental `chezmoi add` of any of these is a no-op.
+.zshrc.local
+.gitconfig.local
+.screenrc.local
+.exchangekey
+.netrc
+.ssh/
+.aws/
+.gnupg/
+.config/gh/
+*.pem
+*.key
+*_rsa
+*_ed25519
+.claude/settings.local.json
+.claude.json
 
 # VS Code settings — OS-specific paths
 {{ if ne .chezmoi.os "darwin" }}

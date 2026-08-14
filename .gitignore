@@ -33,3 +33,17 @@ package-lock.json
 # Claude Code project files for this repo (not shared)
 .claude/
 CLAUDE.md
+
+# Secrets — this repo is PUBLIC. Second line of defence behind .chezmoiignore.
+*.local
+.exchangekey
+.netrc
+*.pem
+*.key
+*_rsa
+*_ed25519
+dot_ssh/
+dot_aws/
+dot_gnupg/
+dot_netrc
+dot_exchangekey
