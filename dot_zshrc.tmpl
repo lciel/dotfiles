@@ -164,8 +164,16 @@ source <(fzf --zsh)
 # uv
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
-# Google Cloud SDK
-[ -f ~/google-cloud-sdk/path.zsh.inc ] && source ~/google-cloud-sdk/path.zsh.inc
+# Google Cloud SDK (the gcloud-cli cask installs under the Homebrew prefix;
+# the standalone tarball installs under $HOME)
+for _gcloud_dir in {{ if eq .chezmoi.os "darwin" }}/opt/homebrew/share/google-cloud-sdk {{ end }}"$HOME/google-cloud-sdk"; do
+  if [ -f "$_gcloud_dir/path.zsh.inc" ]; then
+    source "$_gcloud_dir/path.zsh.inc"
+    [ -f "$_gcloud_dir/completion.zsh.inc" ] && source "$_gcloud_dir/completion.zsh.inc"
+    break
+  fi
+done
+unset _gcloud_dir
 
 ## Plugins (sheldon)
 eval "$(sheldon source)"

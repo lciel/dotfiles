@@ -1,6 +1,6 @@
 [submodule ".zsh/dircolors-solarized"]
 	path = dot_zsh/dircolors-solarized
-	url = git@github.com:seebi/dircolors-solarized.git
+	url = https://github.com/seebi/dircolors-solarized.git
 	ignore = untracked
 [submodule ".tmux/plugins/tpm"]
 	path = dot_tmux/plugins/tpm

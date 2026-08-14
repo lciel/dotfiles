@@ -48,6 +48,14 @@
 {{- else }}
 	helper = store
 {{- end }}
+# GitHub auth via gh (written by `gh auth setup-git`; kept here so
+# `chezmoi apply` does not wipe it). Resolved from PATH, not hardcoded.
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
