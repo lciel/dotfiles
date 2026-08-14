@@ -1,10 +1,10 @@
 #!/bin/bash
 # Bootstrap script for dotfiles setup using chezmoi.
 # On a new machine, run:
-#   sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <github-username>/dotfiles
+#   sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lciel/dotfiles
 #
 # Or if chezmoi is already installed:
-#   chezmoi init --apply <github-username>/dotfiles
+#   chezmoi init --apply lciel/dotfiles
 #
 # On this development machine (repo already cloned):
 #   chezmoi init --source ~/path/to/this/repo
@@ -13,8 +13,6 @@
 set -e
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
-
-echo $DOTFILES_DIR
 
 # Install chezmoi if not present
 if ! command -v chezmoi &>/dev/null; then
@@ -40,13 +38,6 @@ fi
 chezmoi init
 chezmoi apply
 
+# Packages and ~/.screen are handled by the run_once_install-packages-* scripts,
+# which chezmoi apply runs above.
 echo "Done."
-
-if [ "$(uname -s)" = "Darwin" ]; then
-  if [ ! -e ~/.screen ]; then
-    mkdir -p ~/.screen
-  fi
-  echo ""
-  echo "macOS: Install Homebrew packages with:"
-  echo "  brew bundle install --file=$DOTFILES_DIR/osx/Brewfile"
-fi
