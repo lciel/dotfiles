@@ -44,7 +44,16 @@ brew bundle install --file=osx/Brewfile
 
 - `gh auth login` — the git credential helper is already configured in `.gitconfig`
 - Import your GPG key if you sign commits
-- iTerm2: import `dot_iterm2/com.googlecode.iterm2.plist`
+- iTerm2: point it at the managed prefs, then restart it. chezmoi writes the
+  file, but iTerm2 only reads it once told to:
+
+  ```bash
+  defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.iterm2"
+  defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+  ```
+
+  Afterwards iTerm2 offers to save changes back to `~/.iterm2/` when it quits,
+  so `chezmoi add ~/.iterm2/com.googlecode.iterm2.plist` picks up later tweaks.
 - tmux: `Ctrl+T` then `I` to install TPM plugins
 - Claude Code will ask once to confirm auto / bypass permission modes. Those
   acceptance flags are deliberately not in this repo — see "Secrets" below.
