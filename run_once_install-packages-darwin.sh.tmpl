@@ -11,10 +11,18 @@ set -euo pipefail
 
 BREWFILE="{{ .chezmoi.sourceDir }}/osx/Brewfile"
 
-# Homebrew
+# Homebrew. Runs interactively on purpose: with NONINTERACTIVE=1 the upstream
+# installer switches to `sudo -n`, which cannot prompt, so it aborts with
+# "Need sudo access on macOS" on a machine that has no cached credentials --
+# i.e. always, on a brand new Mac. Ask for the password up front so a
+# non-admin account fails here with a clear message rather than midway.
 if ! command -v brew &>/dev/null; then
-  echo "==> Installing Homebrew"
-  NONINTERACTIVE=1 /bin/bash -c \
+  echo "==> Installing Homebrew (asks for your login password)"
+  if ! sudo -v; then
+    echo "!! This account needs administrator rights to install Homebrew." >&2
+    exit 1
+  fi
+  /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
