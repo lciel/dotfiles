@@ -105,6 +105,16 @@ set-option -g status on
 # Battery and clock do not change fast enough to justify polling every 2s.
 set-option -g status-interval 5
 
+# A blank row above the status bar, so it does not sit flush against whatever
+# the pane is printing. tmux draws status-format[0] on top and [1] beneath, so
+# the real bar moves down to [1] and [0] becomes an empty, background-coloured
+# spacer. Resetting the array first keeps this idempotent: on a re-source [0]
+# is already blank, and copying that into [1] would erase the bar entirely.
+set-option -gu status-format
+set-option -g status 2
+set-option -gF 'status-format[1]' '#{status-format[0]}'
+set-option -g 'status-format[0]' '#[bg=default]'
+
 # Theme: catppuccin structure, Tokyo Night palette.
 # The flavour files assign the palette with `set -ogq`, which leaves an existing
 # value alone. Defining @thm_* here - before the plugin is sourced at the bottom
