@@ -1,0 +1,47 @@
+#!/bin/bash
+set -euo pipefail
+
+# =============================================================================
+# VS Code extensions (re-runs whenever the list below changes)
+#
+# settings.json depends on some of these -- the Tokyo Night theme and the
+# neovim extension named in extensions.experimental.affinity -- so shipping
+# the settings without the extensions leaves a new machine looking wrong.
+#
+# Refresh the list from a machine that is set up the way you want:
+#   code --list-extensions
+# =============================================================================
+
+EXTENSIONS=(
+  anthropic.claude-code
+  asvetliakov.vscode-neovim
+  eamodio.gitlens
+  editorconfig.editorconfig
+  enkia.tokyo-night
+  mechatroner.rainbow-csv
+  ms-python.debugpy
+  ms-python.python
+  ms-python.vscode-pylance
+  ms-python.vscode-python-envs
+  oderwat.indent-rainbow
+  vspacecode.whichkey
+)
+
+# The cask symlinks `code` into the Homebrew prefix, so this needs the package
+# script to have run first. Skip quietly rather than fail when VS Code is absent
+# (Linux boxes, or a run before brew bundle).
+if ! command -v code &>/dev/null; then
+  echo "Skipping VS Code extensions: \`code\` not on PATH"
+  exit 0
+fi
+
+installed=$(code --list-extensions 2>/dev/null || true)
+for ext in "${EXTENSIONS[@]}"; do
+  if grep -qix "$ext" <<<"$installed"; then
+    echo "Using $ext"
+  else
+    echo "==> installing $ext"
+    code --install-extension "$ext" --force || \
+      echo "!! failed to install $ext" >&2
+  fi
+done
