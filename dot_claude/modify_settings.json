@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+"""Merge this repo's Claude Code settings into whatever is already on disk.
+
+chezmoi hands a `modify_` script the current target file on stdin and writes
+its stdout back out, so this can enforce the settings the repo owns without
+flattening the ones Claude Code writes for itself.
+
+That split matters for `model`: /model persists the chosen model here, so a
+plain managed file reverted it on the next apply and showed a diff every time
+the model was switched mid-session. It is seeded on a fresh machine and left
+alone afterwards. Any other key Claude Code adds -- acceptance flags,
+autoMode, settings introduced by future versions -- survives the same way, by
+virtue of not being listed below.
+"""
+
+import collections
+import json
+import sys
+
+# Owned by this repo: always written, overwriting whatever is on disk.
+# Held as JSON rather than a dict literal so it can be moved to and from
+# settings.json unchanged -- true/false/null are not Python spellings. The
+# strings are raw, because the hook commands contain escaped quotes.
+MANAGED = r"""
+{
+    "statusLine": {
+        "type": "command",
+        "command": "python3 ~/.claude/statusline.py"
+    },
+    "enabledPlugins": {
+        "security-guidance@claude-plugins-official": true
+    },
+    "extraKnownMarketplaces": {},
+    "hooks": {
+        "UserPromptSubmit": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "\"$HOME/.claude/tmux-claude-state.sh\" running",
+                        "async": true
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "\"$HOME/.claude/tmux-claude-state.sh\" done",
+                        "async": true
+                    }
+                ]
+            }
+        ],
+        "Notification": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "\"$HOME/.claude/tmux-claude-state.sh\" waiting",
+                        "async": true
+                    }
+                ]
+            }
+        ],
+        "SessionEnd": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "\"$HOME/.claude/tmux-claude-state.sh\"",
+                        "async": true
+                    }
+                ]
+            }
+        ]
+    },
+    "effortLevel": "medium",
+    "tui": "fullscreen",
+    "theme": "dark-daltonized"
+}
+"""
+
+# Written only when the key is absent, then left to the machine.
+DEFAULTS = r"""
+{
+    "model": "opus[1m]"
+}
+"""
+
+try:
+    settings = json.load(sys.stdin, object_pairs_hook=collections.OrderedDict)
+except (json.JSONDecodeError, ValueError):
+    # No file yet, or one left mid-edit. Start clean rather than lose the
+    # managed settings to a parse error.
+    settings = collections.OrderedDict()
+
+for key, value in json.loads(DEFAULTS).items():
+    settings.setdefault(key, value)
+settings.update(json.loads(MANAGED))
+
+json.dump(settings, sys.stdout, indent=2, ensure_ascii=False)
+sys.stdout.write("\n")
