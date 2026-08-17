@@ -8,24 +8,15 @@ export WCWIDTH_CJK_LEGACY=yes
 export SSH_EMOJI=$'\U26A1'
 
 ## Prompt
-autoload colors
-colors
-case ${UID} in
-0)
-  PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
-  PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
-  SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-  ;;
-*)
-  SSH_SIGN=""
-  if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then SSH_SIGN="${SSH_EMOJI} "; fi
-  PROMPT="
-%F{248}[%D{%m/%d %H:%M:%S}]%f ${SSH_SIGN}%F{073}%n@%m%f%F{180}:%~%f
-$ "
-  PROMPT2="%F{098}%_%%%f "
-  SPROMPT="%F{198}%r is correct? [n,y,a,e]:%f "
-  ;;
-esac
+# PROMPT / PROMPT2 come from starship, initialised in the Tools section below.
+# There is deliberately no ~/.config/starship.toml: we run starship's stock
+# preset, which needs a Nerd Font (see osx/Brewfile — font-udev-gothic-nf).
+# Only the spell-correction prompt is set here, as starship ignores SPROMPT.
+SPROMPT="%F{198}%r is correct? [n,y,a,e]:%f "
+
+# Drop the right prompt from lines that have already been submitted, so
+# re-prompt below cannot leave stale segments scrolling up the screen.
+setopt transient_rprompt
 
 re-prompt() {
     zle .reset-prompt
@@ -60,27 +51,13 @@ setopt share_history
 autoload -U compinit
 compinit
 
-## Window title (tmux integration — only active inside tmux)
-if [ -n "$TMUX" ]; then
-  set_window() {
-      echo -ne "\ek$1\e\\"
-  }
-
-  set_default_window() {
-      local cmd=$1
-      local ssh_host=""
-      if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then ssh_host="${SSH_EMOJI} ${HOST%%.*}:"; fi
-      set_window "${cmd} ${ssh_host}$(if [ $(pwd) = ~ ]; then echo "~/"; else echo "$(basename $(pwd))"; fi)"
-  }
-
-  preexec() {
-      set_default_window ${1%% *}
-  }
-  chpwd() {
-      set_default_window "cd"
-  }
-  set_default_window "login"
-fi
+## Window title (tmux integration)
+# Deliberately does NOT rename tmux windows any more. A tab is a workspace that
+# is named by hand and kept (Daily, Research, Incident, a project, ...), each
+# holding its own long-running Claude session; renaming it to whatever command
+# just ran would erase that. .tmux.conf enforces the same with allow-rename off.
+# What the window shows instead is Claude's state, published by the hooks in
+# ~/.claude/settings.json — see @claude_state in .tmux.conf.
 
 ssh() {
   if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
@@ -125,7 +102,11 @@ if command -v gls > /dev/null 2>&1; then
 fi
 
 ## Terminal / colors
-export TERM=xterm-256color
+# Inside tmux, TERM is tmux's to set (see default-terminal in .tmux.conf);
+# overriding it here would advertise capabilities the tmux pane does not have.
+if [ -z "$TMUX" ]; then
+    export TERM=xterm-256color
+fi
 
 if command -v gdircolors > /dev/null 2>&1; then
     eval $(gdircolors ~/.zsh/dircolors-solarized/dircolors.ansi-universal)
@@ -177,6 +158,9 @@ unset _gcloud_dir
 
 ## Plugins (sheldon)
 eval "$(sheldon source)"
+
+## Prompt (starship) — must come after sheldon, which loads prompt-touching plugins
+eval "$(starship init zsh)"
 
 ## User config
 [ -f ~/.zsh/func.zsh ] && source ~/.zsh/func.zsh

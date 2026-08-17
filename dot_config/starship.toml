@@ -1,0 +1,9 @@
+# Everything not listed here is starship's stock preset (which needs a Nerd
+# Font — see osx/Brewfile, font-udev-gothic-nf).
+
+[directory]
+# Stock behaviour shows only the last 3 components, and collapses anything at or
+# below a git root to the repo name alone: ~/works/git/dotfiles -> dotfiles.
+# Show the whole path instead, the way zsh's %~ used to.
+truncation_length = 0
+truncate_to_repo = false

@@ -86,6 +86,11 @@ if ! command -v sheldon &>/dev/null; then
     | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
 fi
 
+# starship (prompt)
+if ! command -v starship &>/dev/null; then
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir ~/.local/bin
+fi
+
 # rustup
 if ! command -v rustup &>/dev/null; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y

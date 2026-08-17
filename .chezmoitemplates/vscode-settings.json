@@ -4,9 +4,9 @@
     },
     "workbench.statusBar.visible": false,
     "editor.fontSize": 16,
-    "editor.fontFamily": "Ricty for Powerline, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "UDEV Gothic NF, Ricty for Powerline, Menlo, Monaco, 'Courier New', monospace",
     "terminal.integrated.fontSize": 16,
-    "terminal.integrated.fontFamily": "Ricty for Powerline",
+    "terminal.integrated.fontFamily": "UDEV Gothic NF, Ricty for Powerline",
     "editor.minimap.enabled": false,
     "workbench.colorTheme": "Tokyo Night",
     "workbench.activityBar.location": "top",
@@ -20,5 +20,7 @@
     "git.confirmSync": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 500,
-    "workbench.localHistory.enabled": true
+    "workbench.localHistory.enabled": true,
+    "terminal.integrated.mouseWheelScrollSensitivity": 3,
+    "terminal.integrated.gpuAcceleration": "off"
 }

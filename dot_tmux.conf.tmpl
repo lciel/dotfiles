@@ -10,6 +10,24 @@ bind-key C-h previous-window
 bind-key C-c new-window
 
 
+## Window naming menu
+# prefix-, opens a picker instead of the default prompt: a tab is one of a small
+# set of standing workspaces, so choosing beats retyping. Menu keys are single
+# presses, so prefix-, d names the tab Daily. Anything outside this list goes
+# through "Custom", which is the old free-form prompt pre-filled with #W.
+bind-key , display-menu -T "#[align=centre]Rename window" -x W -y S \
+  "Daily"     d "rename-window Daily"    \
+  "P:SCE"     s "rename-window P:SCE"    \
+  "P:MPST"    m "rename-window P:MPST"   \
+  "Research"  r "rename-window Research" \
+  ""                                     \
+  "Custom..." c "command-prompt -I \"#W\" \"rename-window -- '%%'\"" \
+  "Cancel"    q ""
+
+# New window, named on the spot, without renaming afterwards.
+bind-key C new-window -c "#{pane_current_path}" \; command-prompt "rename-window -- '%%'"
+
+
 ## Pane
 bind-key | split-window -h
 bind-key - split-window -v
@@ -56,41 +74,115 @@ bind-key -T copy-mode-vi G      send-keys -X bottom-line
 set -s escape-time 0
 
 
+## Terminal
+# tmux-256color advertises the terminfo tmux actually implements; screen-256color
+# understates it. The RGB override is what lets 24-bit themes render as authored
+# instead of being quantised to the 256-colour cube.
+set-option -g default-terminal "tmux-256color"
+set-option -ga terminal-overrides ",*256col*:Tc,xterm-256color:Tc"
+
+
+## Window naming
+# Windows are named by hand and keep those names: a tab is a workspace (Daily,
+# Research, Incident, ...), not a readout of whatever command last ran. Both
+# switches are needed - automatic-rename is tmux's own renaming, allow-rename is
+# renaming requested by the shell through an escape sequence.
+set-option -g allow-rename off
+set-option -g automatic-rename off
+set-option -g renumber-windows on
+
+
+## Claude session state per window
+# ~/.claude/tmux-claude-state.sh sets @claude_state from Claude Code's hooks.
+# Selecting a window clears the marker, so it reads "finished since you last
+# looked" rather than "has ever finished" - but a still-running window keeps its
+# marker, since visiting it does not make it done.
+set-hook -g after-select-window 'if -F "#{!=:#{@claude_state},running}" "set -w @claude_state \"\""'
+
+
 ## Visual
-set-option -g default-terminal screen-256color
 set-option -g status on
-set-option -g status-interval 2
-# set-option -g status-utf8 on
-# カラー
-set -g status-style fg=colour231,bg=colour239
-# 左部分
-set -g status-left-length 20
-set -qg status-left '#{?client_prefix,#[fg=colour254]#[bg=colour31]#[nobold],#[fg=colour0]#[bg=colour254]#[nobold]} #S #{?client_prefix,#[fg=colour31]#[bg=colour239]#[nobold],#[fg=colour254]#[bg=colour239]#[nobold]}'
-# 右部分
+# Battery and clock do not change fast enough to justify polling every 2s.
+set-option -g status-interval 5
+
+# Theme: catppuccin structure, Tokyo Night palette.
+# The flavour files assign the palette with `set -ogq`, which leaves an existing
+# value alone. Defining @thm_* here - before the plugin is sourced at the bottom
+# of this file - is therefore the supported way to reskin it. Values are the
+# tokyo-night "night" variant, matching the VS Code theme.
+set -g @thm_bg "#1a1b26"
+set -g @thm_fg "#c0caf5"
+set -g @thm_mantle "#16161e"
+set -g @thm_crust "#101014"
+
+set -g @thm_red "#f7768e"
+set -g @thm_maroon "#ff757f"
+set -g @thm_peach "#ff9e64"
+set -g @thm_yellow "#e0af68"
+set -g @thm_green "#9ece6a"
+set -g @thm_teal "#73daca"
+set -g @thm_sky "#7dcfff"
+set -g @thm_sapphire "#2ac3de"
+set -g @thm_blue "#7aa2f7"
+set -g @thm_lavender "#bb9af7"
+set -g @thm_mauve "#bb9af7"
+set -g @thm_pink "#ff007c"
+set -g @thm_flamingo "#ff9e64"
+set -g @thm_rosewater "#e0af68"
+
+set -g @thm_subtext_1 "#a9b1d6"
+set -g @thm_subtext_0 "#9aa5ce"
+set -g @thm_overlay_2 "#737aa2"
+set -g @thm_overlay_1 "#565f89"
+set -g @thm_overlay_0 "#414868"
+set -g @thm_surface_2 "#3b4261"
+set -g @thm_surface_1 "#292e42"
+set -g @thm_surface_0 "#1f2335"
+
+set -g @catppuccin_window_status_style "rounded"
+set -g @catppuccin_window_number_position "left"
+set -g @catppuccin_window_flags "icon"
+
+# @claude_state is a window option, so it resolves per tab: ● still working,
+# ✓ finished and unseen, ⚠ waiting on me, nothing for tabs that never ran Claude.
+# The current window omits the finished/waiting markers - you are looking at it.
+set -g @catppuccin_window_text " #{?#{==:#{@claude_state},running},#[fg=#{@thm_blue}]#[nobold],#{?#{==:#{@claude_state},done},#[fg=#{@thm_green}],#{?#{==:#{@claude_state},waiting},#[fg=#{@thm_peach}],}}}#{?#{==:#{@claude_state},running},● ,#{?#{==:#{@claude_state},done},✓ ,#{?#{==:#{@claude_state},waiting},⚠ ,}}}#[fg=#{@thm_fg}]#W"
+set -g @catppuccin_window_current_text " #{?#{==:#{@claude_state},running},#[fg=#{@thm_blue}]● #[fg=#{@thm_fg}],}#W"
+
+# catppuccin keeps #{battery_icon} inside its own @catppuccin_battery_* options,
+# where tmux-battery's rewrite of status-right/status-left never reaches - and it
+# wraps them in #{l:}, so even a late rewrite would be printed literally instead
+# of run. Call tmux-battery's scripts directly and the ordering stops mattering.
+set -g @catppuccin_battery_icon "#(~/.tmux/plugins/tmux-battery/scripts/battery_icon.sh) "
+set -g @catppuccin_battery_text " #(~/.tmux/plugins/tmux-battery/scripts/battery_percentage.sh)"
+
+set -g status-left-length 30
 set -g status-right-length 150
-set -g status-right "%Y/%m/%d %H:%M #{battery_status_bg}#[fg=colour0] Batt: #{battery_icon} #{battery_percentage} #{battery_remain} "
-# ウィンドウ
-set -g window-status-format "#[fg=colour244,bg=colour239] #I#[fg=colour240]#[default] #W"
-set -g window-status-current-format "#[fg=colour239,bg=colour12]#[fg=colour0,bg=colour12]#I#[fg=colour0,nobold] #W#[fg=colour12,bg=colour239,nobold]"
-setw -g window-status-style fg=colour249
-set -qg window-status-last-fg colour254
+set -g status-left "#{E:@catppuccin_status_session}"
+set -g status-right "#{E:@catppuccin_status_battery}#{E:@catppuccin_status_date_time}"
+
 setw -g window-status-activity-style none,fg=yellow
 setw -g window-status-bell-style none,fg=red
-# open command
-#set -g default-command "reattach-to-user-namespace -l ${SHELL}"
 
 
 ## Config
 bind-key R source-file ~/.tmux.conf \; display-message "Config reloaded."
 
 
-## Plugins > Install: Prefix-I
-set -g @tpm_plugins '              \
-  tmux-plugins/tpm                 \
-  tmux-plugins/tmux-open           \
-  tmux-plugins/tmux-resurrect      \
-  tmux-plugins/tmux-battery        \
-'
+## Plugins > Install: Prefix-I, Update: Prefix-U
+# @plugin is tpm's current syntax; the older @tpm_plugins list it replaced is
+# deprecated upstream. tpm itself is not listed here — it is pulled in by
+# .chezmoiexternal.toml, which preserves the executable bits its scripts need.
+set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-battery'
+
+# catppuccin must be sourced after @thm_*/@catppuccin_* are set above, and after
+# tmux-battery, whose #{battery_*} formats its battery module consumes.
+set -g @plugin 'catppuccin/tmux'
+
+# Save the session automatically so a reboot does not cost the workspace tabs.
+set -g @continuum-restore 'on'
 
 run-shell '~/.tmux/plugins/tpm/tpm'
-

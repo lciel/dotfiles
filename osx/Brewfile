@@ -2,6 +2,10 @@
 # All entries live in homebrew/core and homebrew/cask — no extra taps needed.
 
 # Fonts
+# UDEV Gothic NF is the terminal font: JetBrains Mono + BIZ UDGothic, with Nerd
+# Font glyphs for starship's stock preset and a strict 1:2 half/full width ratio
+# so CJK stays aligned (see WCWIDTH_CJK_LEGACY in .zshrc).
+cask "font-udev-gothic-nf"
 cask "font-ricty-diminished"
 
 # Core CLI tools
@@ -16,6 +20,7 @@ brew "lv"      # .gitconfig uses `lv -c` as the git pager
 brew "tree"
 
 # Shell
+brew "starship"
 brew "sheldon"
 brew "zoxide"
 brew "fzf"

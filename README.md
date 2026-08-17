@@ -54,7 +54,9 @@ brew bundle install --file=osx/Brewfile
 
   Afterwards iTerm2 offers to save changes back to `~/.iterm2/` when it quits,
   so `chezmoi add ~/.iterm2/com.googlecode.iterm2.plist` picks up later tweaks.
-- tmux: `Ctrl+T` then `I` to install TPM plugins
+- tmux: `Ctrl+T` then `I` to install TPM plugins. TPM itself arrives via
+  `.chezmoiexternal.toml` rather than a submodule, so its scripts keep the
+  executable bit chezmoi would otherwise strip.
 - Claude Code will ask once to confirm auto / bypass permission modes. Those
   acceptance flags are deliberately not in this repo — see "Secrets" below.
 
@@ -111,11 +113,37 @@ Repo-only files (`README.md`, `CLAUDE.md`, `install.sh`, `osx/`, `fonts/`) are e
 
 Files ending in `.tmpl` are rendered by chezmoi at apply time. OS-specific logic (macOS vs Linux) and user-specific values (email, GPG key) are handled here.
 
+## tmux windows as workspaces
+
+Windows are named by hand and keep their names (`allow-rename off`), so a tab is
+a workspace — Daily, Research, Incident, one per project — each holding its own
+long-running Claude Code session. Rename with `Ctrl+T` then `,`.
+
+Claude Code's hooks publish that session's state onto its own window, and the
+status bar renders it:
+
+| Marker | Meaning |
+|--------|---------|
+| `●` | working right now |
+| `✓` | finished since you last looked at that tab |
+| `⚠` | waiting for your input |
+| none | that tab has never run Claude |
+
+Selecting a window clears `✓` and `⚠` but leaves `●` alone — visiting a tab
+means you have seen the result, not that the work is done. The hooks live in
+`dot_claude/settings.json` and call `dot_claude/executable_tmux-claude-state.sh`,
+which targets `$TMUX_PANE` so several sessions never overwrite each other.
+
 ## Tools
 
+- **Prompt**: [starship](https://starship.rs/) (stock preset; needs a Nerd Font)
 - **Shell plugins**: [sheldon](https://github.com/rossmacarthur/sheldon) (TOML config)
 - **Runtime manager**: [mise](https://mise.jdx.dev/) (replaces rbenv/pyenv/nodenv)
 - **Directory jump**: [zoxide](https://github.com/ajeetdsouza/zoxide)
 - **Fuzzy finder**: [fzf](https://github.com/junegunn/fzf)
 - **Neovim plugins**: [lazy.nvim](https://github.com/folke/lazy.nvim)
 - **Tmux plugins**: [TPM](https://github.com/tmux-plugins/tpm)
+- **Tmux theme**: [catppuccin/tmux](https://github.com/catppuccin/tmux), repainted
+  with the Tokyo Night palette via `@thm_*` so tmux, starship and VS Code match
+- **Terminal font**: UDEV Gothic NF — Nerd Font glyphs plus a strict 1:2
+  half/full width ratio, so CJK stays aligned

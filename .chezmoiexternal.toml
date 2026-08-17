@@ -1,0 +1,15 @@
+# Third-party trees pulled in at apply time rather than vendored.
+#
+# tpm's entry points (tpm, bin/*, bindings/*) must be executable. chezmoi only
+# marks a target executable when the SOURCE filename carries the executable_
+# prefix, which cannot be applied to files inside a vendored upstream tree — so
+# a submodule here lands in $HOME as 0644 and .tmux.conf's `run-shell .../tpm`
+# fails silently, taking every tmux plugin with it. Cloning it as an external
+# keeps upstream's file modes.
+
+[".tmux/plugins/tpm"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tpm.git"
+    refreshPeriod = "168h"
+    [".tmux/plugins/tpm".clone]
+        args = ["--depth", "1"]
