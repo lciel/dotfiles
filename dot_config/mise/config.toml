@@ -1,3 +1,10 @@
 [tools]
 node = "25"
 ruby = "3"
+
+# Pushed to this file by Jamf, not chosen here: hold back releases younger than
+# a week. Tracked so `chezmoi apply` stops stripping it back out on every run --
+# both write to this one file, there is no separate system-level mise config.
+# If Jamf changes the value, re-absorb it with `chezmoi add`.
+[settings]
+minimum_release_age = "7d"
