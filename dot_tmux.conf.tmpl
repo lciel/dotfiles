@@ -152,16 +152,19 @@ set -g @catppuccin_window_flags "icon"
 # inactive but lands at 3.7:1 against the tab background, under the 4.5:1 needed
 # to stay comfortably readable. subtext_0 is 6.4:1 and still visibly recessive.
 set -g @catppuccin_window_text " #{?#{==:#{@claude_state},running},#[fg=#{@thm_blue}]● ,#{?#{==:#{@claude_state},done},#[fg=#{@thm_green}]✓ ,#{?#{==:#{@claude_state},waiting},#[fg=#{@thm_peach}]⚠ ,}}}#[fg=#{@thm_subtext_0}]#W"
-set -g @catppuccin_window_current_text " #[fg=#{@thm_crust},bold]#{?#{==:#{@claude_state},running},● ,}#W"
+set -g @catppuccin_window_current_text " #[fg=#{@thm_fg},bold]#{?#{==:#{@claude_state},running},● ,}#W"
 
-# Active tab is a solid blue block with dark bold text - filled, not tinted.
-# Stock catppuccin separates the two only by number-chip colour and a pair of
-# near-identical backgrounds (#1f2335 vs #292e42), which is hard to pick out at
-# a glance. Number chip and text share one colour so the tab reads as one block.
+# Stock catppuccin separates current from the rest only by number-chip colour
+# and a pair of near-identical backgrounds (#1f2335 vs #292e42, 1.16:1 apart),
+# which is hard to pick out at a glance across five tabs. The number chip keeps
+# its blue; what changes is the name block, which steps up to overlay_1 - 2.51:1
+# clear of the inactive background instead of 1.16:1. Bold light text on top.
+# Going brighter still would separate the tabs further but push the name below
+# 4.5:1 against its own background, so overlay_1 is where the two meet.
 set -g @catppuccin_window_number_color "#{@thm_overlay_2}"
 set -g @catppuccin_window_text_color "#{@thm_surface_0}"
 set -g @catppuccin_window_current_number_color "#{@thm_blue}"
-set -g @catppuccin_window_current_text_color "#{@thm_blue}"
+set -g @catppuccin_window_current_text_color "#{@thm_overlay_1}"
 
 # catppuccin keeps #{battery_icon} inside its own @catppuccin_battery_* options,
 # where tmux-battery's rewrite of status-right/status-left never reaches - and it
