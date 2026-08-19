@@ -1,0 +1,27 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# =============================================================================
+# macOS defaults (re-runs whenever this file changes)
+#
+# These live in the user defaults database, not in a file under $HOME, so
+# chezmoi cannot manage them the way it manages dotfiles -- they need a script.
+# =============================================================================
+
+# Press-and-hold shows the accent-character picker instead of repeating the
+# key, which breaks holding j/k to scroll in a vim keymap. Off is per app
+# domain: iTerm2 already carries its own copy inside ~/.iterm2, so the editors
+# are what need setting here.
+for domain in com.microsoft.VSCode com.microsoft.VSCodeInsiders; do
+  current=$(defaults read "$domain" ApplePressAndHoldEnabled 2>/dev/null || echo unset)
+  if [ "$current" = "0" ]; then
+    echo "Using $domain ApplePressAndHoldEnabled=false"
+  else
+    echo "==> $domain: disabling press-and-hold"
+    defaults write "$domain" ApplePressAndHoldEnabled -bool false
+  fi
+done
+
+echo "Restart any app listed above for the change to take effect."
+{{ end -}}
